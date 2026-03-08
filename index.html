@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pannya Metta Sangha</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════════ */
+:root{
+  --blue-deep:#0a1628;--blue-mid:#1a3a6b;--blue-bright:#2563eb;
+  --blue-light:#60a5fa;--blue-pale:#dbeafe;
+  --gold:#f59e0b;--gold-light:#fcd34d;
+  --white:#ffffff;--text-dark:#1e293b;--text-mid:#475569;
+  --shadow:0 8px 32px rgba(10,22,40,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:#f0f6ff;color:var(--text-dark);overflow-x:hidden;}
+
+/* PAGE SYSTEM */
+.subpage{display:none;}
+.subpage.active{display:block;}
+#mainSite{display:block;}
+#mainSite.hidden{display:none;}
+
+/* HEADER */
+header{
+  position:sticky;top:0;z-index:1000;
+  background:linear-gradient(135deg,#0a1628 0%,#1a3a6b 50%,#2563eb 100%);
+  box-shadow:0 4px 24px rgba(10,22,40,0.35);
+  padding:0 2rem;height:70px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.header-left{display:flex;align-items:center;gap:14px;}
+.logo-circle{
+  width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;box-shadow:0 0 0 3px rgba(245,158,11,0.3);
+  flex-shrink:0;cursor:pointer;transition:transform .25s;
+}
+.logo-circle:hover{transform:scale(1.08);}
+.org-title{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--white);letter-spacing:.5px;line-height:1.2;text-shadow:0 1px 4px rgba(0,0,0,.3);}
+.org-subtitle{font-size:.65rem;color:var(--gold-light);letter-spacing:1px;text-transform:uppercase;}
+nav{display:flex;align-items:center;gap:6px;}
+nav a{color:rgba(255,255,255,.88);text-decoration:none;font-size:.88rem;font-weight:600;padding:6px 12px;border-radius:20px;transition:all .25s;letter-spacing:.3px;cursor:pointer;}
+nav a:hover{background:rgba(255,255,255,.15);color:#fff;}
+.translator-btn{
+  background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.5);
+  color:var(--gold-light);padding:6px 14px;border-radius:20px;
+  font-size:.82rem;font-weight:700;cursor:pointer;transition:all .25s;
+  font-family:'Nunito',sans-serif;letter-spacing:.3px;
+}
+.translator-btn:hover{background:rgba(245,158,11,.35);border-color:var(--gold);color:#fff;}
+.hamburger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:8px;border-radius:8px;transition:background .2s;}
+.hamburger:hover{background:rgba(255,255,255,.1);}
+.hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:all .3s;}
+
+/* SIDE PANEL */
+.side-panel{
+  position:fixed;top:0;right:-360px;width:340px;height:100vh;
+  background:linear-gradient(180deg,#0a1628 0%,#1a3a6b 100%);
+  z-index:2000;transition:right .4s cubic-bezier(.16,1,.3,1);
+  box-shadow:-8px 0 40px rgba(0,0,0,.4);overflow-y:auto;padding:80px 0 40px;
+}
+.side-panel.open{right:0;}
+.side-panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1999;opacity:0;pointer-events:none;transition:opacity .3s;}
+.side-panel-overlay.open{opacity:1;pointer-events:all;}
+.panel-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.1);border:none;cursor:pointer;color:#fff;font-size:1.4rem;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.panel-close:hover{background:rgba(255,255,255,.2);}
+.panel-category{padding:0 24px;margin-bottom:8px;}
+.panel-category-title{font-family:'Cinzel',serif;font-size:.78rem;color:var(--gold-light);letter-spacing:2px;text-transform:uppercase;padding:12px 0 8px;border-bottom:1px solid rgba(245,158,11,.25);margin-bottom:6px;}
+.panel-btn{display:block;color:rgba(255,255,255,.85);font-size:.92rem;padding:9px 16px;border-radius:8px;transition:all .2s;margin-bottom:2px;font-weight:600;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Nunito',sans-serif;}
+.panel-btn:hover{background:rgba(255,255,255,.12);color:#fff;padding-left:22px;}
+.panel-sub-btn{display:block;color:rgba(200,220,255,.8);font-size:.86rem;padding:7px 16px 7px 28px;border-radius:8px;transition:all .2s;margin-bottom:2px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Nunito',sans-serif;}
+.panel-sub-btn:hover{background:rgba(255,255,255,.1);color:#fff;}
+
+/* HERO */
+.hero{
+  min-height:60vh;
+  background:linear-gradient(135deg,#0a1628 0%,#1a3a6b 55%,#2563eb 100%);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:80px 2rem;
+  position:relative;overflow:hidden;
+}
+.hero-bg-img{position:absolute;inset:0;background-image:url('');background-size:cover;background-position:center;opacity:0.13;z-index:0;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");z-index:1;}
+.hero-content{position:relative;z-index:2;max-width:700px;}
+.hero-dharma{font-size:3rem;margin-bottom:16px;animation:float 4s ease-in-out infinite;display:block;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--white);font-weight:700;margin-bottom:12px;text-shadow:0 2px 20px rgba(0,0,0,.4);line-height:1.2;}
+.hero-tagline{font-size:1rem;color:var(--gold-light);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;font-weight:600;}
+.hero-desc{color:rgba(255,255,255,.8);font-size:1.05rem;line-height:1.7;max-width:560px;margin:0 auto;}
+
+/* SECTION COMMONS */
+section{padding:80px 2rem;}
+.container{max-width:1100px;margin:0 auto;}
+.section-label{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--blue-bright);margin-bottom:8px;font-weight:600;}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(1.5rem,3vw,2.2rem);color:var(--blue-deep);margin-bottom:40px;font-weight:700;}
+.section-title.center{text-align:center;}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--blue-bright),var(--gold));border-radius:3px;margin:0 auto 32px;}
+
+/* INTRO GRID */
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:80px;}
+.intro-grid.reverse{direction:rtl;}
+.intro-grid.reverse>*{direction:ltr;}
+.intro-photo-side{display:flex;flex-direction:column;align-items:center;gap:18px;}
+.photo-circle{width:200px;height:200px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 6px var(--blue-pale),0 0 0 10px var(--blue-bright),var(--shadow);transition:transform .4s;flex-shrink:0;}
+.photo-circle:hover{transform:scale(1.04);}
+.photo-circle img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.photo-placeholder{width:200px;height:200px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:5rem;box-shadow:0 0 0 6px var(--blue-pale),0 0 0 10px var(--blue-bright),var(--shadow);transition:transform .4s;}
+.photo-placeholder:hover{transform:scale(1.04);}
+.photo-placeholder.gold-bg{background:linear-gradient(135deg,#f59e0b,#fcd34d);}
+.photo-placeholder.blue-bg{background:linear-gradient(135deg,#1a3a6b,#2563eb);}
+.photo-name{font-family:'Cinzel',serif;font-size:1rem;color:var(--blue-mid);text-align:center;font-weight:600;max-width:220px;line-height:1.4;}
+.intro-text h2{font-family:'Cinzel',serif;font-size:1.7rem;color:var(--blue-deep);margin-bottom:16px;}
+.intro-text p{color:var(--text-mid);line-height:1.8;margin-bottom:14px;font-size:.97rem;}
+.badge-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+.badge{background:var(--blue-pale);color:var(--blue-bright);padding:5px 14px;border-radius:20px;font-size:.8rem;font-weight:700;letter-spacing:.5px;}
+
+/* INITIATIVES */
+.initiatives-section{background:linear-gradient(135deg,#0a1628 0%,#1a3a6b 100%);padding:80px 2rem;}
+.initiatives-section .section-title{color:var(--white);}
+.initiatives-section .section-label{color:var(--gold-light);}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.cards-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+.cards-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1);backdrop-filter:blur(10px);}
+.card:hover{transform:translateY(-10px);background:rgba(255,255,255,.13);border-color:rgba(245,158,11,.4);box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 0 1px rgba(245,158,11,.2);}
+.card-img{width:100%;height:180px;overflow:hidden;position:relative;}
+.card-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .5s ease;}
+.card:hover .card-img img{transform:scale(1.07);}
+.card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(10,22,40,.55) 100%);}
+.card-img-placeholder{width:100%;height:180px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;}
+.card-body{padding:22px;}
+.card-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--white);margin-bottom:10px;font-weight:600;}
+.card-desc{color:rgba(200,220,255,.8);font-size:.875rem;line-height:1.6;margin-bottom:14px;}
+.card-cta{color:var(--gold-light);font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:linear-gradient(135deg,#f0f6ff 0%,#ffffff 100%);border-radius:20px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.5);transform:scale(.9) translateY(20px);transition:all .35s cubic-bezier(.16,1,.3,1);}
+.modal-overlay.open .modal{transform:scale(1) translateY(0);}
+.modal-header{background:linear-gradient(135deg,#0a1628,#2563eb);padding:30px;position:relative;border-radius:20px 20px 0 0;}
+.modal-title{font-family:'Cinzel',serif;color:#fff;font-size:1.4rem;font-weight:700;}
+.modal-subtitle{color:var(--gold-light);font-size:.85rem;margin-top:4px;letter-spacing:.5px;}
+.modal-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.15);border:none;cursor:pointer;color:#fff;font-size:1.3rem;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.modal-close:hover{background:rgba(255,255,255,.3);}
+.modal-body{padding:30px;}
+.modal-hero-img{width:100%;height:240px;border-radius:12px;overflow:hidden;margin-bottom:24px;box-shadow:0 4px 20px rgba(10,22,40,.18);}
+.modal-hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.modal-img-placeholder{width:100%;height:220px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:24px;}
+.modal-body p{color:var(--text-mid);line-height:1.8;margin-bottom:14px;font-size:.95rem;}
+.modal-body h4{font-family:'Cinzel',serif;color:var(--blue-deep);margin:20px 0 10px;font-size:1rem;}
+.modal-img-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.modal-img-grid img{width:100%;height:140px;object-fit:cover;border-radius:10px;}
+
+/* PROJECTS */
+.projects-section{background:#f0f6ff;}
+.projects-list{display:flex;flex-direction:column;gap:16px;max-width:750px;margin:0 auto;}
+.project-item{background:#fff;border-left:4px solid var(--blue-bright);border-radius:0 12px 12px 0;padding:20px 24px;display:flex;align-items:center;gap:20px;box-shadow:0 2px 12px rgba(37,99,235,.08);transition:all .3s;}
+.project-item:hover{transform:translateX(8px);box-shadow:0 6px 24px rgba(37,99,235,.15);border-color:var(--gold);}
+.project-icon{font-size:2rem;flex-shrink:0;}
+.project-name{font-family:'Cinzel',serif;font-size:1rem;color:var(--blue-deep);font-weight:600;}
+.project-desc{color:var(--text-mid);font-size:.85rem;margin-top:3px;}
+
+/* ABOUT */
+.about-section{background:linear-gradient(135deg,#f0f6ff,#dbeafe);text-align:center;}
+.about-content{max-width:780px;margin:0 auto;}
+.about-content p{color:var(--text-mid);line-height:1.9;font-size:1rem;margin-bottom:18px;}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;text-align:center;}
+.value-card{background:#fff;border-radius:16px;padding:28px 20px;box-shadow:0 4px 20px rgba(37,99,235,.1);transition:all .3s;}
+.value-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(37,99,235,.18);}
+.value-icon{font-size:2.2rem;margin-bottom:12px;}
+.value-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--blue-deep);font-weight:700;margin-bottom:8px;}
+.value-desc{color:var(--text-mid);font-size:.85rem;line-height:1.6;}
+
+/* CONTACT */
+.contact-section{background:#fff;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.contact-brand{text-align:center;}
+.contact-logo{font-size:8rem;margin-bottom:20px;}
+.contact-brand-name{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--blue-deep);font-weight:700;margin-bottom:10px;}
+.contact-motto{color:var(--blue-bright);font-size:.9rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;}
+.contact-details h3{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--blue-deep);margin-bottom:24px;}
+.contact-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;}
+.contact-item-icon{width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.contact-item-text{font-size:.9rem;color:var(--text-mid);line-height:1.5;}
+.contact-item-label{font-weight:700;color:var(--blue-deep);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+.social-icons{display:flex;gap:12px;margin-top:20px;justify-content:center;}
+.social-icon{width:42px;height:42px;border-radius:50%;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;transition:all .2s;}
+.social-icon:hover{background:var(--blue-bright);transform:translateY(-3px);}
+.contact-form{margin-top:28px;}
+.contact-form input,.contact-form textarea{width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:.92rem;color:var(--text-dark);background:#f8fafc;transition:border .2s;margin-bottom:12px;}
+.contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--blue-bright);background:#fff;}
+.contact-form textarea{min-height:90px;resize:vertical;}
+.contact-form button{background:linear-gradient(135deg,var(--blue-mid),var(--blue-bright));color:#fff;padding:12px 30px;border-radius:24px;font-weight:700;font-size:.92rem;cursor:pointer;border:none;font-family:'Nunito',sans-serif;transition:all .25s;}
+.contact-form button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.3);}
+.map-placeholder{width:100%;height:200px;background:linear-gradient(135deg,var(--blue-pale),#bfdbfe);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-top:20px;font-size:1rem;color:var(--blue-mid);font-weight:600;}
+
+/* FOOTER */
+footer{background:linear-gradient(135deg,#020d1e 0%,#0a1628 60%,#1a3a6b 100%);padding:30px 2rem;text-align:center;}
+footer p{color:rgba(200,220,255,.6);font-size:.85rem;}
+.footer-title{font-family:'Cinzel',serif;color:var(--gold-light);font-size:1rem;margin-bottom:8px;letter-spacing:1px;}
+
+/* LANGUAGE TOGGLE */
+[data-ja]{display:none;}
+body.ja [data-en]{display:none;}
+body.ja [data-ja]{display:revert;}
+
+/* SUB-PAGE STYLES */
+.sp-hero{padding:80px 2rem;text-align:center;position:relative;overflow:hidden;}
+.sp-hero::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:1;}
+.sp-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.18;z-index:0;}
+.sp-feb6{background:linear-gradient(135deg,#0a1628,#1a3a6b,#2563eb);}
+.sp-feb7{background:linear-gradient(135deg,#0a1628,#1a3a6b,#065f46);}
+.sp-feb8{background:linear-gradient(135deg,#0a1628,#4c1d95,#7c3aed);}
+.sp-feb9{background:linear-gradient(135deg,#0a1628,#92400e,#d97706);}
+.sp-buddhism{background:linear-gradient(135deg,#0a1628,#1a3a6b,#d97706);}
+.sp-about{background:linear-gradient(135deg,#0a1628,#1e3a5f,#2563eb);}
+.sp-president{background:linear-gradient(135deg,#1a0a28,#3a1a6b,#6b21a8);}
+.sp-horisawa{background:linear-gradient(135deg,#0a2818,#1a6b3a,#059669);}
+.sp-school{background:linear-gradient(135deg,#1a280a,#3a6b1a,#65a30d);}
+.sp-social{background:linear-gradient(135deg,#280a0a,#6b1a1a,#dc2626);}
+.sp-magazine{background:linear-gradient(135deg,#0a1628,#1a2a4b,#3b4f7a);}
+.sp-essay{background:linear-gradient(135deg,#1a0a1a,#4b1a6b,#7c3aed);}
+.sp-hq{background:linear-gradient(135deg,#0a1628,#1a3a6b,#2563eb);}
+.sp-balaghat{background:linear-gradient(135deg,#0a2010,#1a5030,#059669);}
+.date-badge{display:inline-block;padding:6px 20px;border-radius:20px;font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative;z-index:2;}
+.b-blue{background:rgba(37,99,235,.2);border:1px solid rgba(37,99,235,.5);color:#93c5fd;}
+.b-green{background:rgba(5,150,105,.2);border:1px solid rgba(5,150,105,.5);color:#6ee7b7;}
+.b-purple{background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.5);color:#c4b5fd;}
+.b-gold{background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.5);color:var(--gold-light);}
+.b-red{background:rgba(220,38,38,.2);border:1px solid rgba(220,38,38,.5);color:#fca5a5;}
+.sp-hero h1{font-family:'Cinzel',serif;color:#fff;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:14px;text-shadow:0 2px 20px rgba(0,0,0,.4);position:relative;z-index:2;}
+.sp-hero-sub{color:rgba(255,255,255,.78);font-size:1rem;max-width:600px;margin:0 auto;line-height:1.7;position:relative;z-index:2;}
+.memorial-img-strip{width:100%;height:280px;overflow:hidden;position:relative;border-radius:16px;margin-bottom:30px;box-shadow:0 8px 32px rgba(10,22,40,.22);}
+.memorial-img-strip img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.memorial-img-strip::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(10,22,40,.35) 100%);}
+.sp-content{max-width:900px;margin:0 auto;padding:60px 2rem;}
+.info-card{background:#fff;border-radius:16px;padding:36px;box-shadow:0 4px 24px rgba(37,99,235,.1);margin-bottom:30px;}
+.ic-blue{border-left:4px solid var(--blue-bright);}
+.ic-green{border-left:4px solid #059669;}
+.ic-purple{border-left:4px solid #7c3aed;}
+.ic-gold{border-left:4px solid var(--gold);}
+.ic-red{border-left:4px solid #dc2626;}
+.info-card h2{font-family:'Cinzel',serif;color:var(--blue-deep);font-size:1.3rem;margin-bottom:18px;font-weight:700;}
+.info-card h3{font-family:'Cinzel',serif;color:var(--blue-mid);font-size:1.1rem;margin:18px 0 10px;font-weight:600;}
+.info-card p{color:#475569;line-height:1.8;margin-bottom:14px;font-size:.97rem;}
+.info-card ul{color:#475569;padding-left:24px;line-height:2;}
+.info-card ul li{margin-bottom:6px;}
+.img-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;}
+.img-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:20px 0;}
+.img-grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin:20px 0;}
+.img-grid-2 img,.img-grid-3 img,.img-grid-4 img{width:100%;border-radius:10px;object-fit:cover;}
+.img-grid-2 img{height:180px;}
+.img-grid-3 img{height:150px;}
+.img-grid-4 img{height:120px;}
+.teacher-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:24px 0;}
+.teacher-card{background:#f8fafc;border-radius:14px;padding:22px;text-align:center;border:1px solid #e2e8f0;}
+.teacher-photo{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;border:3px solid var(--blue-pale);}
+.teacher-photo-ph{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--blue-pale),#bfdbfe);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2rem;}
+.teacher-name{font-family:'Cinzel',serif;font-size:.95rem;color:var(--blue-deep);font-weight:700;margin-bottom:4px;}
+.teacher-subject{color:var(--blue-bright);font-size:.82rem;font-weight:600;margin-bottom:8px;}
+.teacher-bio{color:var(--text-mid);font-size:.82rem;line-height:1.5;}
+.sch-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px;}
+.si{border-radius:12px;padding:18px;}
+.si-blue{background:linear-gradient(135deg,#f0f6ff,#dbeafe);border:1px solid #bfdbfe;}
+.si-green{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;}
+.si-purple{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #c4b5fd;}
+.si-gold{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fcd34d;}
+.st{font-family:'Cinzel',serif;font-size:.95rem;font-weight:700;margin-bottom:4px;}
+.st-blue{color:var(--blue-bright);}
+.st-green{color:#059669;}
+.st-purple{color:#7c3aed;}
+.st-gold{color:#b45309;}
+.se{color:var(--blue-deep);font-size:.9rem;font-weight:600;}
+.sd{color:#64748b;font-size:.82rem;margin-top:4px;}
+.hl-box{border-radius:16px;padding:30px;color:#fff;text-align:center;margin:30px 0;}
+.hl-blue{background:linear-gradient(135deg,#0a1628,#1a3a6b);}
+.hl-green{background:linear-gradient(135deg,#065f46,#059669);}
+.hl-purple{background:linear-gradient(135deg,#4c1d95,#7c3aed);}
+.hl-gold{background:linear-gradient(135deg,#92400e,#d97706);}
+.hl-box h3{font-family:'Cinzel',serif;font-size:1.2rem;margin-bottom:10px;}
+.hl-box p{line-height:1.7;opacity:.9;}
+.back-wrap{text-align:center;margin-top:40px;padding-bottom:60px;}
+.back-btn{display:inline-block;background:linear-gradient(135deg,var(--blue-mid),var(--blue-bright));color:#fff;padding:13px 34px;border-radius:24px;font-weight:700;font-size:.92rem;cursor:pointer;border:none;font-family:'Nunito',sans-serif;transition:all .25s;letter-spacing:.3px;margin:6px;}
+.back-btn:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(37,99,235,.35);}
+.closing-banner{background:linear-gradient(135deg,#0a1628,#1a3a6b);border-radius:16px;padding:44px;text-align:center;color:#fff;margin-top:10px;}
+.closing-banner h3{font-family:'Cinzel',serif;color:var(--gold-light);font-size:1.5rem;margin-bottom:12px;}
+.closing-banner p{color:rgba(200,220,255,.85);line-height:1.7;max-width:560px;margin:0 auto 14px;}
+.dharma-spin{font-size:3rem;margin-bottom:16px;animation:spin 12s linear infinite;display:inline-block;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+/* Year tabs for Feb7 */
+.year-tabs{display:flex;gap:12px;margin-bottom:28px;justify-content:center;}
+.year-tab{padding:10px 36px;border-radius:24px;font-family:'Cinzel',serif;font-size:1.05rem;font-weight:700;cursor:pointer;border:2px solid var(--blue-bright);color:var(--blue-bright);background:#fff;transition:all .25s;box-shadow:0 2px 10px rgba(37,99,235,.1);}
+.year-tab:hover{background:var(--blue-pale);}
+.year-tab.active{background:linear-gradient(135deg,var(--blue-bright),#1a3a6b);border-color:var(--blue-bright);color:#fff;box-shadow:0 4px 18px rgba(37,99,235,.3);}
+.year-content{display:none;}
+.year-content.active{display:block;}
+/* PDF download */
+.pdf-link{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;padding:12px 26px;border-radius:12px;font-weight:700;font-size:.9rem;text-decoration:none;transition:all .25s;margin:8px 6px;}
+.pdf-link:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(220,38,38,.35);}
+/* Side-by-side leader layout */
+.leader-grid{display:grid;grid-template-columns:220px 1fr;gap:36px;align-items:start;margin-bottom:24px;}
+.leader-photo{width:200px;height:240px;border-radius:16px;object-fit:cover;box-shadow:var(--shadow);}
+.leader-photo-ph{width:200px;height:240px;border-radius:16px;background:linear-gradient(135deg,var(--blue-pale),#bfdbfe);display:flex;align-items:center;justify-content:center;font-size:5rem;box-shadow:var(--shadow);}
+/* Stats row */
+.stats-row{display:flex;gap:24px;flex-wrap:wrap;margin:24px 0;}
+.stat-box{flex:1;min-width:120px;background:linear-gradient(135deg,#f0f6ff,#dbeafe);border-radius:14px;padding:20px;text-align:center;}
+.stat-num{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--blue-bright);font-weight:700;}
+.stat-label{color:var(--text-mid);font-size:.8rem;margin-top:4px;}
+/* Achievement cards */
+.achievement-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+.ach-item{background:#f8fafc;border-radius:12px;padding:18px;border:1px solid #e2e8f0;display:flex;gap:14px;align-items:flex-start;}
+.ach-icon{font-size:1.8rem;flex-shrink:0;}
+.ach-title{font-family:'Cinzel',serif;font-size:.9rem;color:var(--blue-deep);font-weight:700;margin-bottom:4px;}
+.ach-desc{color:var(--text-mid);font-size:.82rem;line-height:1.5;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .cards-grid{grid-template-columns:1fr 1fr;}
+  .cards-grid-4{grid-template-columns:1fr 1fr;}
+  .values-grid{grid-template-columns:1fr 1fr;}
+  .teacher-grid{grid-template-columns:1fr 1fr;}
+  .achievement-list{grid-template-columns:1fr;}
+}
+@media(max-width:720px){
+  nav a.hm{display:none;}
+  .intro-grid{grid-template-columns:1fr;gap:32px;}
+  .intro-grid.reverse{direction:ltr;}
+  .contact-grid{grid-template-columns:1fr;gap:40px;}
+  .cards-grid{grid-template-columns:1fr;}
+  .cards-grid-2{grid-template-columns:1fr;}
+  .cards-grid-4{grid-template-columns:1fr 1fr;}
+  .values-grid{grid-template-columns:1fr;}
+  .sch-grid{grid-template-columns:1fr;}
+  .teacher-grid{grid-template-columns:1fr;}
+  .img-grid-3{grid-template-columns:1fr 1fr;}
+  .img-grid-4{grid-template-columns:1fr 1fr;}
+  .leader-grid{grid-template-columns:1fr;}
+  .leader-photo,.leader-photo-ph{width:100%;height:200px;}
+}
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div class="side-panel-overlay" id="panelOverlay" onclick="closeSidePanel()"></div>
+
+<!-- ══════════════ SIDE PANEL ══════════════ -->
+<div class="side-panel" id="sidePanel">
+  <button class="panel-close" onclick="closeSidePanel()">✕</button>
+
+  <div class="panel-category">
+    <div class="panel-category-title" data-en>Information</div>
+    <div class="panel-category-title" data-ja>情報</div>
+    <button class="panel-btn" onclick="showPage('buddhism')" data-en> Buddhism & Ambedkar</button>
+    <button class="panel-btn" onclick="showPage('buddhism')" data-ja> 仏教とアンベードカル</button>
+    <button class="panel-btn" onclick="showPage('pms-about')" data-en> About Pannya Metta Sangha</button>
+    <button class="panel-btn" onclick="showPage('pms-about')" data-ja> 組織について</button>
+  </div>
+
+  <div class="panel-category">
+    <div class="panel-category-title" data-en>Memorial Services</div>
+    <div class="panel-category-title" data-ja>追悼サービス</div>
+    <button class="panel-sub-btn" onclick="showPage('feb6')" data-en> 6th Feb – Pradnyagiri</button>
+    <button class="panel-sub-btn" onclick="showPage('feb6')" data-ja> 2月6日 – プラドニャギリ</button>
+    <button class="panel-sub-btn" onclick="showPage('feb7')" data-en> 7th Feb – Dhammasangashti</button>
+    <button class="panel-sub-btn" onclick="showPage('feb7')" data-ja> 2月7日 – ダンマサンガシュティ</button>
+    <button class="panel-sub-btn" onclick="showPage('feb8')" data-en> 8th Feb – Mahasamadhibhumi</button>
+    <button class="panel-sub-btn" onclick="showPage('feb8')" data-ja> 2月8日 – マハーサマーディブーミ</button>
+    <button class="panel-sub-btn" onclick="showPage('balaghat')" data-en> Balaghat</button>
+    <button class="panel-sub-btn" onclick="showPage('balaghat')" data-ja>バラガット</button>
+  </div>
+
+  <div class="panel-category">
+    <div class="panel-category-title" data-en>Organisation</div>
+    <div class="panel-category-title" data-ja>組織</div>
+    <button class="panel-btn" onclick="showPage('hq')" data-en> Headquarters</button>
+    <button class="panel-btn" onclick="showPage('hq')" data-ja> 本部</button>
+    <button class="panel-btn" onclick="showPage('school')" data-en> PMS School</button>
+    <button class="panel-btn" onclick="showPage('school')" data-ja> 学校</button>
+    <button class="panel-btn" onclick="showPage('essay')" data-en> Essay Competition</button>
+    <button class="panel-btn" onclick="showPage('essay')" data-ja> 作文コンクール</button>
+    <button class="panel-btn" onclick="showPage('social')" data-en> Social Work</button>
+    <button class="panel-btn" onclick="showPage('social')" data-ja> 社会奉仕</button>
+    <button class="panel-btn" onclick="showPage('magazine')" data-en> Magazine</button>
+    <button class="panel-btn" onclick="showPage('magazine')" data-ja> 雑誌</button>
+  </div>
+
+  <div class="panel-category">
+    <div class="panel-category-title" data-en>Leadership</div>
+    <div class="panel-category-title" data-ja>指導者</div>
+    <button class="panel-btn" onclick="showPage('president')" data-en> Ven. Sangharatna Manake</button>
+    <button class="panel-btn" onclick="showPage('president')" data-ja> サンガラトナ・マナケ師</button>
+    <button class="panel-btn" onclick="showPage('horisawa')" data-en> Horisawaji</button>
+    <button class="panel-btn" onclick="showPage('horisawa')" data-ja> 堀沢師</button>
+  </div>
+
+  <div class="panel-category">
+    <div class="panel-category-title" data-en>Connect</div>
+    <div class="panel-category-title" data-ja>つながり</div>
+    <button class="panel-btn" onclick="navTo('contact')" data-en>Contact Us</button>
+    <button class="panel-btn" onclick="navTo('contact')" data-ja>お問い合わせ</button>
+  </div>
+</div>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="header-left">
+    <div class="logo-circle" onclick="showMain()" title="Go Home"><img src="pmsimg/logo.png" alt="Logo" loading="lazy" width="40" height="35"></div>
+    <div>
+      <div class="org-title" data-en>Pannya Metta Sangha</div>
+      <div class="org-title" data-ja>パンニャ・メッタ・サンガ</div>
+      <div class="org-subtitle" data-en>Wisdom · Compassion · Community</div>
+      <div class="org-subtitle" data-ja>智慧・慈悲・共同体</div>
+    </div>
+  </div>
+  <nav>
+    <a class="hm" onclick="showMain()" data-en>Home</a>
+    <a class="hm" onclick="showMain()" data-ja>ホーム</a>
+    <a class="hm" onclick="showPage('buddhism')" data-en>Buddhism</a>
+    <a class="hm" onclick="showPage('buddhism')" data-ja>仏教</a>
+    <a class="hm" onclick="showPage('pms-about')" data-en>About</a>
+    <a class="hm" onclick="showPage('pms-about')" data-ja>概要</a>
+    <a class="hm" onclick="navTo('contact')" data-en>Contact</a>
+    <a class="hm" onclick="navTo('contact')" data-ja>連絡先</a>
+    <button class="translator-btn" onclick="toggleLanguage()" id="langBtn">🌐 日本語</button>
+    <button class="hamburger" onclick="openSidePanel()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     MAIN SITE
+══════════════════════════════════════════════ -->
+<div id="mainSite">
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-bg-img" aria-hidden="true"></div>
+  <div class="hero-content">
+    <span class="hero-dharma"><img src="pmsimg/wlogo.png" alt="Logo" loading="lazy" width="150" height="100"></span>
+    <p class="hero-tagline" data-en>Wisdom · Compassion · Community</p>
+    <p class="hero-tagline" data-ja>智慧・慈悲・共同体</p>
+    <h1 data-en>Pannya Metta Sangha</h1>
+    <h1 data-ja>パンニャ・メッタ・サンガ</h1>
+    <p class="hero-desc" data-en>Walking the path of the Dhamma — nurturing wisdom, cultivating loving-kindness, and serving humanity through the timeless teachings of the Buddha.</p>
+    <p class="hero-desc" data-ja>ダンマの道を歩む — 智慧を育み、慈悲を培い、仏陀の永遠の教えを通して人類に奉仕します。</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section id="intro" style="background:#fff;">
+  <div class="container">
+    <div class="section-label" data-en>Our Inspiration</div>
+    <div class="section-label" data-ja>私たちのインスピレーション</div>
+
+    <!-- Buddha -->
+    <div class="intro-grid">
+      <div class="intro-photo-side">
+        <div class="photo-circle">
+          <img src="pmsimg/buddha.jpeg" alt="Gautama Buddha" loading="lazy" width="200" height="200">
+        </div>
+        <div class="photo-name" data-en>Gautama Buddha<br><small style="font-weight:400;color:#6b7280;">563 BCE – 483 BCE</small></div>
+        <div class="photo-name" data-ja>ガウタマ・ブッダ<br><small style="font-weight:400;color:#6b7280;">紀元前563年 – 483年</small></div>
+      </div>
+      <div class="intro-text">
+        <h2 data-en>The Awakened One</h2>
+        <h2 data-ja>目覚めた者</h2>
+        <p data-en>Siddhartha Gautama attained enlightenment under the Bodhi tree at Bodh Gaya, becoming the Buddha — the Awakened One. His teachings of the Four Noble Truths and the Noble Eightfold Path offer a profound roadmap from suffering to liberation.</p>
+        <p data-en>Buddhism spread throughout Asia and now encompasses many traditions worldwide, united by core values of compassion, mindfulness, and the pursuit of wisdom.</p>
+        <p data-ja>シッダールタ・ゴータマはブッダガヤの菩提樹の下で悟りを開きました。四聖諦と八正道は苦しみから解脱への道標を提供します。仏教はアジア全体に広まり、何十億もの人々に平和と内なる自由への霊感を与え続けています。</p>
+        <div class="badge-row">
+          <span class="badge" data-en>Dhamma</span><span class="badge" data-en>Enlightenment</span><span class="badge" data-en>Compassion</span><span class="badge" data-en>Nirvana</span>
+          <span class="badge" data-ja>ダルマ</span><span class="badge" data-ja>悟り</span><span class="badge" data-ja>慈悲</span><span class="badge" data-ja>涅槃</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- INITIATIVES -->
+<section class="initiatives-section" id="initiatives">
+  <div class="container">
+    <div class="section-label" data-en>Our Work</div>
+    <div class="section-label" data-ja>私たちの活動</div>
+    <div class="section-title" data-en>Key Initiatives</div>
+    <div class="section-title" data-ja>主要なイニシアチブ</div>
+    <div class="cards-grid">
+      <!-- Mahasamadhi Bhoomi -->
+      <div class="card" onclick="openModal('bhoomi')">
+        <div class="card-img"><img src="pmsimg/maha2.jpeg" alt="Mahasamadhi Bhoomi" loading="lazy" width="600" height="360"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Mahasamadhibhumi</div>
+          <div class="card-title" data-ja>マハーサマーディブーミ</div>
+          <div class="card-desc" data-en>A sacred ground on the banks of Wainganga River — a living centre of Buddhist practice and cultural heritage, with the magnificent Maha Stupa inaugurated in 2007.</div>
+          <div class="card-desc" data-ja>ワインガンガ川のほとりの神聖な聖地。2007年開幕の大仏塔を持つ仏教実践の生きた中心地。</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+      <!-- Pradnyagiri -->
+      <div class="card" onclick="openModal('pradnyagiri')">
+        <div class="card-img"><img src="pmsimg/prad.jpeg" alt="Pradnyagiri" loading="lazy" width="600" height="360"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Pradnyagiri</div>
+          <div class="card-title" data-ja>プラドニャギリ</div>
+          <div class="card-desc" data-en>A spiritually significant mountain in Dongargarh with a majestic 30-ft meditating Buddha statue symbolising world peace and universal brotherhood.</div>
+          <div class="card-desc" data-ja>世界平和と普遍的な友愛を象徴する30フィートの仏陀像が建立された霊山。</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+      <!-- Library -->
+      <div class="card" onclick="openModal('library')">
+        <div class="card-img"><img src="" alt="PMS Library" loading="lazy" width="600" height="360"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Pannya Metta Sangha Library</div>
+          <div class="card-title" data-ja>パンニャ・メッタ・サンガ図書館</div>
+          <div class="card-desc" data-en>A treasure trove of Buddhist scriptures, Dr. Ambedkar's writings, and literature on social justice — open to scholars, students and the community.</div>
+          <div class="card-desc" data-ja>仏教経典、アンベードカル博士の著作、社会正義文学を所蔵する図書館。</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+      <!-- Balsadan -->
+      <div class="card" onclick="openModal('balsadan')" style="grid-column:span 1;">
+        <div class="card-img"><img src="pmsimg/bal.jpg" alt="Pannya Metta Balsadan" loading="lazy" width="600" height="360"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Pannya Metta Balsadan</div>
+          <div class="card-title" data-ja>パンニャ・メッタ・バルサダン</div>
+          <div class="card-desc" data-en>A loving home for orphan children at Sindhpuri, Pauni — providing shelter, education, and healthcare since 1995.</div>
+          <div class="card-desc" data-ja>1995年設立。孤児に住居、教育、医療を提供するパウニの慈悲の家。</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="container">
+    <div class="section-label" style="text-align:center;" data-en>Looking Ahead</div>
+    <div class="section-label" style="text-align:center;" data-ja>未来を見据えて</div>
+    <div class="section-title center" data-en>Upcoming Projects</div>
+    <div class="section-title center" data-ja>今後のプロジェクト</div>
+    <div class="divider"></div>
+    <div class="projects-list">
+      <div class="project-item">
+        <div class="project-icon">🌟</div>
+        <div>
+          <div class="project-name" data-en>Youth Organisation</div>
+          <div class="project-name" data-ja>青年組織</div>
+          <div class="project-desc" data-en>Launching a dedicated youth wing for dhamma study, leadership development, and community service initiatives.</div>
+          <div class="project-desc" data-ja>ダルマの学習、リーダーシップ開発、地域奉仕活動のための専用青年部の立ち上げ。</div>
+        </div>
+      </div>
+      <div class="project-item">
+        <div class="project-icon">👁️</div>
+        <div>
+          <div class="project-name" data-en>Cataract Surgery Program</div>
+          <div class="project-name" data-ja>白内障手術プログラム</div>
+          <div class="project-desc" data-en>Expanding free cataract surgery services to more villages across Bhandara and Gadchiroli districts.</div>
+          <div class="project-desc" data-ja>バンダーラ・ガドチロリ地区のより多くの村への無料白内障手術サービスの拡大。</div>
+        </div>
+      </div>
+      <div class="project-item">
+        <div class="project-icon">🩸</div>
+        <div>
+          <div class="project-name" data-en>Monthly Sanitary Pad Distribution</div>
+          <div class="project-name" data-ja>月次衛生パッド配布</div>
+          <div class="project-desc" data-en>Free menstrual hygiene products for underprivileged women and girls, promoting dignity and health.</div>
+          <div class="project-desc" data-ja>恵まれない女性と少女への生理用品の無料配布。尊厳と健康を促進。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDING LIGHT -->
+<section id="guiding-light" style="background:#fff;padding:80px 2rem;">
+  <div class="container">
+    <div class="section-label" data-en>Our Leadership</div>
+    <div class="section-label" data-ja>私たちのリーダーシップ</div>
+    <div class="intro-grid reverse">
+      <div class="intro-photo-side">
+        <div class="photo-circle">
+          <img src="pmsimg/name.png" alt="Venerable Sangharatna Manake" loading="lazy" width="200" height="200">
+        </div>
+        <div class="photo-name" data-en>Venerable Sangharatna Manake<br><small style="font-weight:400;color:#6b7280;font-size:.8rem;">President, Pannya Metta Sangha</small></div>
+        <div class="photo-name" data-ja>僧侶サンガラトナ・マナケ<br><small style="font-weight:400;color:#6b7280;font-size:.8rem;">パンニャ・メッタ・サンガ会長</small></div>
+      </div>
+      <div class="intro-text">
+        <h2 data-en>Our Guiding Light</h2>
+        <h2 data-ja>私たちの導きの光</h2>
+        <p data-en>Venerable Sangharatna Manake leads Pannya Metta Sangha with a deep commitment to the Buddha's timeless vision. Under his guidance, the organisation weaves together Pannya (wisdom) and Metta (loving-kindness) into every aspect of its mission.</p>
+        <p data-en>Through meditation retreats, educational programs, and grassroots welfare initiatives, he nurtures a living tradition that bridges ancient wisdom with contemporary social needs.</p>
+        <p data-ja>僧侶サンガラトナ・マナケは、仏陀のビジョンへの深いコミットメントを持ってパンニャ・メッタ・サンガを導いています。社会福祉、教育、地域開発に根ざした慈悲深いコミュニティの構築が彼のビジョンです。</p>
+        <div class="badge-row">
+          <span class="badge" data-en>Pannya</span><span class="badge" data-en>Metta</span><span class="badge" data-en>Mindfulness</span><span class="badge" data-en>Service</span>
+          <span class="badge" data-ja>パンニャ</span><span class="badge" data-ja>メッタ</span><span class="badge" data-ja>マインドフルネス</span><span class="badge" data-ja>奉仕</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-content">
+      <div class="section-label" data-en>Who We Are</div>
+      <div class="section-label" data-ja>私たちについて</div>
+      <div class="section-title center" data-en>About Pannya Metta Sangha</div>
+      <div class="section-title center" data-ja>パンニャ・メッタ・サンガについて</div>
+      <div class="divider"></div>
+      <p data-en>Pannya Metta Sangha (PMS) is a spiritual and social organization dedicated to promoting wisdom, loving-kindness, and community service. Our name embodies our core identity: <strong>Pannya</strong> (Wisdom), <strong>Metta</strong> (Loving-Kindness), and <strong>Sangha</strong> (Community).</p>
+      <p data-en>Founded in 1982, our mission is to spread the teachings of mindfulness and ethical living while actively engaging in social welfare. We welcome all who seek to walk the path of wisdom and compassion.</p>
+      <p data-ja>パンニャ・メッタ・サンガは、仏陀の教えに根ざした精神的・社会的組織です。<strong>パンニャ</strong>（智慧）、<strong>メッタ</strong>（慈悲）、<strong>サンガ</strong>（共同体）— この三つが私たちのアイデンティティの核心です。</p>
+      <div class="values-grid">
+        <div class="value-card"><div class="value-icon">🧘</div><div class="value-title" data-en>Spirituality</div><div class="value-title" data-ja>霊性</div><div class="value-desc" data-en>Grounded in Buddhist practice and the transformative power of mindfulness.</div><div class="value-desc" data-ja>仏教の実践とマインドフルネスの変革力に基づいています。</div></div>
+        <div class="value-card"><div class="value-icon">💛</div><div class="value-title" data-en>Compassion</div><div class="value-title" data-ja>慈悲</div><div class="value-desc" data-en>Driven by Metta — boundless loving-kindness extended to all beings.</div><div class="value-desc" data-ja>すべてに向けられた無限の慈悲（メッタ）に駆られています。</div></div>
+        <div class="value-card"><div class="value-icon">🤝</div><div class="value-title" data-en>Community</div><div class="value-title" data-ja>共同体</div><div class="value-desc" data-en>Building inclusive, caring communities through social welfare and education.</div><div class="value-desc" data-ja>社会福祉と教育を通じて包括的なコミュニティを構築します。</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-brand">
+        <div class="contact-logo"><img src="pmsimg/logo.png" alt="Logo" loading="lazy" width="300" height="150"></div>
+        <div class="contact-brand-name" data-en>Pannya Metta Sangha</div>
+        <div class="contact-brand-name" data-ja>パンニャ・メッタ・サンガ</div>
+        <div class="contact-motto" data-en>Wisdom • Compassion • Community</div>
+        <div class="contact-motto" data-ja>智慧・慈悲・共同体</div>
+        <div class="social-icons">
+          <div class="social-icon" title="Facebook">📘</div>
+          <div class="social-icon" title="Instagram">📸</div>
+          <div class="social-icon" title="YouTube">▶️</div>
+          <div class="social-icon" title="WhatsApp">💬</div>
+        </div>
+        <div class="map-placeholder">📍 Nagpur, Maharashtra, India</div>
+      </div>
+      <div class="contact-details">
+        <h3 data-en>Get In Touch</h3>
+        <h3 data-ja>お問い合わせ</h3>
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div>
+            <div class="contact-item-label" data-en>Email</div>
+            <div class="contact-item-label" data-ja>メール</div>
+            <div class="contact-item-text">pannyamettasangha1982@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div>
+            <div class="contact-item-label" data-en>Phone</div>
+            <div class="contact-item-label" data-ja>電話</div>
+            <div class="contact-item-text">+91 9766186214</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-label" data-en>Address</div>
+            <div class="contact-item-label" data-ja>住所</div>
+            <div class="contact-item-text" data-en>Regd. No. MAH 586/82, F-3849(NAG)<br>Head Office: Buddha Nag Vihara,<br>Cr. No. 15/21, Hardasnagar (Lashkaribagh),<br>Nagpur, Maharashtra, India</div>
+            <div class="contact-item-text" data-ja>登録番号：MAH 586/82, F-3849(NAG)<br>本部：ブッダ・ナグ・ヴィハーラ<br>ハルダースナガル（ラシュカリバーグ）<br>ナーグプル、マハーラーシュトラ州、インド</div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <input type="text" placeholder="Your Name" data-en-placeholder="Your Name">
+          <input type="email" placeholder="Your Email">
+          <textarea placeholder="Your Message"></textarea>
+          <button type="button" data-en>Send Message</button>
+          <button type="button" data-ja>メッセージを送る</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-title" data-en>Pannya Metta Sangha</div>
+  <div class="footer-title" data-ja>パンニャ・メッタ・サンガ</div>
+  <p data-en>© 2026 Pannya Metta Sangha, India. All rights reserved. | Spreading Wisdom · Compassion · Community</p>
+  <p data-ja>© 2026 パンニャ・メッタ・サンガ、インド。全著作権所有。| 智慧・慈悲・共同体</p>
+</footer>
+</div><!-- /mainSite -->
+
+<!-- ══════════════════════════════════════════════
+     PAGE 1: BUDDHISM / AMBEDKAR / SAICHOJI
+══════════════════════════════════════════════ -->
+<div id="page-buddhism" class="subpage">
+  <div class="sp-hero sp-buddhism">
+    <div class="date-badge b-gold" data-en>Knowledge & History</div>
+    <div class="date-badge b-gold" data-ja>知識と歴史</div>
+    <h1 data-en>Buddhism, Dr. Ambedkar & Saichoji</h1>
+    <h1 data-ja>仏教・アンベードカル博士・西光寺</h1>
+    <p class="sp-hero-sub" data-en>Exploring the roots of Buddhism, the revolutionary work of Dr. B.R. Ambedkar, and our sacred connection with Saichoji Temple in Japan.</p>
+    <p class="sp-hero-sub" data-ja>仏教の根源、アンベードカル博士の革命的な業績、そして日本の西光寺との神聖なつながりを探ります。</p>
+  </div>
+  <div class="sp-content">
+
+    <!-- Section 1: Buddhism -->
+    <div class="info-card ic-gold">
+      <h2 data-en>☸ Buddhism — The Path of Awakening</h2>
+      <h2 data-ja>☸ 仏教 — 覚醒への道</h2>
+      <h3 data-en>Origin of Buddhism</h3>
+      <h3 data-ja>仏教の起源</h3>
+      <p data-en>Buddhism originated in ancient India around the 5th century BCE, founded by Siddhartha Gautama — the Shakyamuni Buddha. Born into a royal family in Lumbini (present-day Nepal), Siddhartha renounced his privileged life to seek an answer to the universal problem of human suffering.</p>
+      <p data-ja>仏教は紀元前5世紀頃の古代インドに、シッダールタ・ゴータマ（釈迦牟尼仏）によって創始されました。ルンビニ（現ネパール）の王家に生まれたシッダールタは、人間の苦しみという普遍的な問題への答えを求めて裕福な生活を捨てました。</p>
+      <div class="img-grid-3">
+        <img src="" alt="Bodhi Tree at Bodh Gaya">
+        <img src="" alt="Buddha's First Sermon at Sarnath">
+        <img src="" alt="Spread of Buddhism across Asia">
+      </div>
+      <h3 data-en>Life of Gautama Buddha</h3>
+      <h3 data-ja>ガウタマ・ブッダの生涯</h3>
+      <p data-en>After years of asceticism and meditation, Siddhartha attained enlightenment under the sacred Bodhi Tree at Bodh Gaya, becoming the Buddha — the "Awakened One." He then delivered his first sermon at Sarnath, setting the Wheel of Dhamma in motion.</p>
+      <p data-ja>厳しい修行と瞑想の末、シッダールタはブッダガヤの菩提樹の下で悟りを開き、「目覚めた者」すなわちブッダとなりました。その後、サールナートで初転法輪を説きました。</p>
+      <h3 data-en>Four Noble Truths & Noble Eightfold Path</h3>
+      <h3 data-ja>四聖諦と八正道</h3>
+      <ul>
+        <li data-en><strong>Dukkha</strong> — The truth of suffering: life involves unsatisfactoriness and impermanence</li>
+        <li data-en><strong>Samudaya</strong> — The origin of suffering: craving and attachment are the root causes</li>
+        <li data-en><strong>Nirodha</strong> — The cessation of suffering: liberation is possible through the ending of craving</li>
+        <li data-en><strong>Magga</strong> — The path to liberation: the Noble Eightfold Path</li>
+        <li data-ja><strong>苦諦</strong> — 苦しみの真実：人生には不満足と無常が伴う</li>
+        <li data-ja><strong>集諦</strong> — 苦しみの原因：渇望と執着が根本原因</li>
+        <li data-ja><strong>滅諦</strong> — 苦しみの滅：渇望の終焉によって解脱は可能</li>
+        <li data-ja><strong>道諦</strong> — 解脱への道：八正道</li>
+      </ul>
+      <p data-en>The Noble Eightfold Path encompasses Right View, Right Intention, Right Speech, Right Action, Right Livelihood, Right Effort, Right Mindfulness, and Right Concentration.</p>
+      <p data-ja>八正道は正見、正思惟、正語、正業、正命、正精進、正念、正定を含みます。</p>
+      <h3 data-en>Spread of Buddhism Across Asia</h3>
+      <h3 data-ja>アジア全土への仏教の広まり</h3>
+      <p data-en>Under Emperor Ashoka's patronage in the 3rd century BCE, Buddhism spread throughout India and beyond — reaching Sri Lanka, Southeast Asia, Central Asia, China, Korea, Japan, and Tibet. Today, over 500 million people worldwide follow Buddhist teachings.</p>
+      <p data-ja>紀元前3世紀のアショーカ王の保護のもと、仏教はインド全土、そしてスリランカ、東南アジア、中央アジア、中国、韓国、日本、チベットへと広まりました。今日、世界中で5億人以上が仏教の教えに従っています。</p>
+    </div>
+
+    <!-- Section 2: Dr. Ambedkar -->
+    <div class="info-card ic-blue">
+      <h2 data-en>✊ Dr. B. R. Ambedkar & Buddhism</h2>
+      <h2 data-ja>✊ アンベードカル博士と仏教</h2>
+      <p data-en>Dr. Bhimrao Ramji Ambedkar (1891–1956) was a jurist, economist, social reformer, and the principal architect of the Indian Constitution. Born into the "Untouchable" Mahar caste, he dedicated his life to fighting caste discrimination and seeking liberation for millions of oppressed people.</p>
+      <p data-ja>ビームラーオ・ラームジー・アンベードカル博士（1891–1956）は法学者、経済学者、社会改革者であり、インド憲法の主要起草者です。「不可触民」マハール・カーストに生まれ、カースト差別と戦い、数百万の抑圧された人々の解放に生涯を捧げました。</p>
+      <div class="img-grid-3">
+        <img src="" alt="Dr. B. R. Ambedkar portrait">
+        <img src="" alt="Deekshabhoomi Nagpur conversion ceremony">
+        <img src="" alt="Navayana Buddhism movement">
+      </div>
+      <h3 data-en>The Historic Conversion at Deekshabhoomi, Nagpur</h3>
+      <h3 data-ja>ナーグプル・ディークシャブーミでの歴史的な改宗</h3>
+      <p data-en>On October 14, 1956, Dr. Ambedkar, along with approximately 600,000 of his followers, converted to Buddhism at Deekshabhoomi in Nagpur — one of the largest mass religious conversions in history. This event marked the beginning of the modern Buddhist revival in India.</p>
+      <p data-ja>1956年10月14日、アンベードカル博士は約60万人の信者とともにナーグプルのディークシャブーミで仏教に改宗しました。これは歴史上最大の集団宗教改宗の一つであり、インドにおける現代的な仏教復興の始まりを告げました。</p>
+      <h3 data-en>Navayana Buddhism — A New Vehicle</h3>
+      <h3 data-ja>ナヴァヤーナ仏教 — 新しい乗り物</h3>
+      <p data-en>Dr. Ambedkar developed what he called "Navayana" (New Vehicle) Buddhism — a reinterpretation that emphasises social equality, human rights, and rational inquiry. His monumental work "The Buddha and His Dhamma" remains the guiding scripture for millions of Ambedkarite Buddhists in India.</p>
+      <p data-ja>アンベードカル博士は「ナヴァヤーナ」（新しい乗り物）仏教を展開しました。社会平等、人権、合理的探究を強調した再解釈です。彼の記念碑的著作「仏陀と彼のダンマ」は、インドの何百万ものアンベードカル派仏教徒の導きの聖典です。</p>
+      <h3 data-en>Social Equality and Buddhist Philosophy</h3>
+      <h3 data-ja>社会平等と仏教哲学</h3>
+      <p data-en>For Dr. Ambedkar, Buddhism was not merely a religion but a social philosophy of liberation. He saw in the Buddha's teachings a radical challenge to the caste system — a path toward a society based on liberty, equality, and fraternity.</p>
+      <p data-ja>アンベードカル博士にとって、仏教は単なる宗教ではなく解放の社会哲学でした。仏陀の教えにカースト制度への根本的な挑戦を見出し、自由、平等、友愛に基づく社会への道を示しました。</p>
+    </div>
+
+    <!-- Section 3: Saichoji -->
+    <div class="info-card ic-green">
+      <h2 data-en>🌸 Saichoji Temple — Our Japanese Connection</h2>
+      <h2 data-ja>🌸 西光寺 — 私たちの日本とのつながり</h2>
+      <p data-en>Saichoji is a revered Buddhist temple in Japan that has developed a meaningful and enduring relationship with Pannya Metta Sangha. This Indo-Japanese Buddhist connection embodies the universal spirit of the Dhamma, transcending cultural and national boundaries.</p>
+      <p data-ja>西光寺は日本の尊敬される仏教寺院で、パンニャ・メッタ・サンガと意義深い永続的な関係を築いてきました。このインド・日本間の仏教的つながりは、文化的・国家的境界を超えたダンマの普遍的精神を体現しています。</p>
+      <div class="img-grid-3">
+        <img src="" alt="Saichoji Temple exterior">
+        <img src="" alt="Indo-Japanese Buddhist ceremony at Saichoji">
+        <img src="" alt="Cultural exchange program">
+      </div>
+      <h3 data-en>History of Saichoji Temple</h3>
+      <h3 data-ja>西光寺の歴史</h3>
+      <p data-en>Saichoji Temple has a rich history rooted in Japanese Buddhist tradition. The temple serves as a vital bridge between Japanese Buddhism and the Navayana Buddhist movement in India, fostering cultural and spiritual exchange that deepens understanding between both communities.</p>
+      <p data-ja>西光寺は日本の仏教伝統に根ざした豊かな歴史を持っています。日本仏教とインドのナヴァヤーナ仏教運動の間の重要な橋渡しとして機能し、両コミュニティの理解を深める文化的・精神的交流を育んでいます。</p>
+      <h3 data-en>Relation to Pannya Metta Sangha</h3>
+      <h3 data-ja>パンニャ・メッタ・サンガとの関係</h3>
+      <p data-en>The relationship between Saichoji and Pannya Metta Sangha has blossomed through decades of collaboration — including joint programs, exchange visits, support for the Balsadan children's home, and participation in the annual Dhammasangashti events. This sacred bond reflects the Sangha's commitment to international Buddhist solidarity.</p>
+      <p data-ja>西光寺とパンニャ・メッタ・サンガの関係は、共同プログラム、相互訪問、バルサダンの子どもたちへの支援、年次ダンマサンガシュティ行事への参加など、数十年にわたる協力によって発展してきました。この神聖な絆は国際的な仏教連帯へのサンガのコミットメントを反映しています。</p>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 2: ABOUT PANNYA METTA SANGHA
+══════════════════════════════════════════════ -->
+<div id="page-pms-about" class="subpage">
+  <div class="sp-hero sp-about">
+    <div class="date-badge b-blue" data-en>Est. 1982</div>
+    <div class="date-badge b-blue" data-ja>1982年設立</div>
+    <h1 data-en>About Pannya Metta Sangha</h1>
+    <h1 data-ja>パンニャ・メッタ・サンガについて</h1>
+    <p class="sp-hero-sub" data-en>A spiritual and social organisation rooted in the teachings of the Buddha, dedicated to wisdom, compassion, and community welfare since 1982.</p>
+    <p class="sp-hero-sub" data-ja>1982年から仏陀の教えに根ざし、智慧、慈悲、地域福祉に専念する精神的・社会的組織。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-blue">
+      <h2 data-en>🏛️ History & Founding Vision</h2>
+      <h2 data-ja>🏛️ 歴史と設立ビジョン</h2>
+      <p data-en>Pannya Metta Sangha was founded in 1982 (Registered No. MAH 586/82, F-3849(NAG)) with a vision to create a compassionate community grounded in Buddhist values. Born in the wake of Dr. Ambedkar's historic conversion movement, the Sangha emerged as a beacon of hope for communities seeking spiritual and social transformation.</p>
+      <p data-en>The founding members were inspired by the threefold path of Pannya (Wisdom), Metta (Loving-Kindness), and Sangha (Community) — understanding that true liberation encompasses both spiritual development and social responsibility.</p>
+      <p data-ja>パンニャ・メッタ・サンガは1982年に設立されました（登録番号：MAH 586/82, F-3849(NAG)）。アンベードカル博士の歴史的な改宗運動の後に生まれ、精神的・社会的変革を求めるコミュニティの希望の光となりました。</p>
+      <div class="img-grid-2">
+        <img src="" alt="Pannya Metta Sangha founding ceremony">
+        <img src="" alt="Early days of Pannya Metta Sangha">
+      </div>
+    </div>
+
+    <div class="info-card ic-gold">
+      <h2 data-en>📿 Buddhist Philosophy</h2>
+      <h2 data-ja>📿 仏教哲学</h2>
+      <p data-en>At the heart of Pannya Metta Sangha's mission is the living application of Buddhist philosophy. We draw equally from the Theravada tradition's emphasis on meditation and personal liberation, and from Dr. Ambedkar's Navayana interpretation which foregrounds social equality and collective action.</p>
+      <p data-en>Our philosophical framework recognises that the Dhamma must be engaged with not only in the meditation hall but in every sphere of life — in schools, hospitals, homes, and communities. The Sangha practices the Bodhisattva ideal of working for the liberation of all beings.</p>
+      <p data-ja>パンニャ・メッタ・サンガの使命の核心は仏教哲学の生きた応用です。瞑想と個人的解放を強調するテーラワーダの伝統と、社会平等と集合行動を前面に出したアンベードカル博士のナヴァヤーナの解釈を等しく取り込んでいます。</p>
+      <img src="" alt="Buddhist philosophy in practice" style="width:100%;height:200px;object-fit:cover;border-radius:12px;margin-top:16px;">
+    </div>
+
+    <div class="info-card ic-green">
+      <h2 data-en>🌍 Community Welfare Work</h2>
+      <h2 data-ja>🌍 地域福祉活動</h2>
+      <p data-en>Community service is not peripheral to our spiritual mission — it is its living expression. Over four decades, Pannya Metta Sangha has undertaken wide-ranging welfare activities spanning education, healthcare, women's empowerment, and rural development.</p>
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-num">40+</div><div class="stat-label" data-en>Years of Service</div><div class="stat-label" data-ja>奉仕の年月</div></div>
+        <div class="stat-box"><div class="stat-num">500+</div><div class="stat-label" data-en>Annual Eye Surgeries</div><div class="stat-label" data-ja>年間眼科手術</div></div>
+        <div class="stat-box"><div class="stat-num">32</div><div class="stat-label" data-en>Children at Balsadan</div><div class="stat-label" data-ja>バルサダンの子どもたち</div></div>
+        <div class="stat-box"><div class="stat-num">5L+</div><div class="stat-label" data-en>Pilgrim Visitors</div><div class="stat-label" data-ja>巡礼者</div></div>
+      </div>
+      <p data-en>Our welfare activities include the Pannya Metta Balsadan (children's home), annual medical camps, mobile hospital services, cataract surgery programs, COVID-19 relief, monthly sanitary pad distribution, and rural scholarships.</p>
+      <p data-ja>福祉活動にはパンニャ・メッタ・バルサダン（子どもの家）、年次医療キャンプ、移動病院サービス、白内障手術プログラム、COVID-19救援、月次生理用品配布、農村奨学金が含まれます。</p>
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>🎨 Cultural Contributions</h2>
+      <h2 data-ja>🎨 文化的貢献</h2>
+      <p data-en>Pannya Metta Sangha actively promotes Buddhist art, literature, and culture as vehicles of Dhamma propagation. Our annual Mahasamadhibhumi Magazine serves as a platform for Buddhist scholarship and community news. We support cultural events, essay competitions, and artistic programs that deepen community engagement with Buddhist heritage.</p>
+      <p data-en>The organisation has established a library, facilitated international Buddhist exchanges with Japan, and has been instrumental in organising the annual Dhammasangashti — a major Buddhist convention drawing thousands from across India and abroad.</p>
+      <p data-ja>パンニャ・メッタ・サンガは仏教芸術、文学、文化をダンマ普及の手段として積極的に促進しています。年次マハーサマーディブーミ雑誌は仏教研究とコミュニティニュースのプラットフォームとして機能しています。</p>
+      <div class="img-grid-3">
+        <img src="" alt="Cultural program at PMS">
+        <img src="" alt="Dhammasangashti convention">
+        <img src="" alt="Buddhist art and literature">
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: 6th FEBRUARY – PRADNYAGIRI
+══════════════════════════════════════════════ -->
+<div id="page-feb6" class="subpage">
+  <div class="sp-hero sp-feb6">
+    <div class="date-badge b-blue" data-en>Memorial Services · Day 1</div>
+    <div class="date-badge b-blue" data-ja>追悼サービス・第1日</div>
+    <h1 data-en>6th February — Pradnyagiri</h1>
+    <h1 data-ja>2月6日 — プラドニャギリ</h1>
+    <p class="sp-hero-sub" data-en>Opening Day at Pradnyagiri, Dongargarh — honouring the sacred hilltop Buddha and gathering the community in the spirit of Dhamma.</p>
+    <p class="sp-hero-sub" data-ja>ドンガルガル・プラドニャギリでの開幕日 — 神聖な丘の上の仏陀を称え、ダンマの精神でコミュニティが集います。</p>
+  </div>
+  <div class="sp-content">
+    <div class="img-grid-2" style="margin-bottom:30px;">
+      <img src="" alt="Pradnyagiri hilltop Buddha statue" style="height:220px;">
+      <img src="" alt="Annual Buddhist gathering at Pradnyagiri" style="height:220px;">
+    </div>
+
+    <div class="info-card ic-blue">
+      <h2 data-en>🏔️ History of Pradnyagiri</h2>
+      <h2 data-ja>🏔️ プラドニャギリの歴史</h2>
+      <p data-en>Pradnyagiri — the "Hill of Wisdom" — is a spiritually significant mountain located in the Dongargarh region of Rajnandgaon district, Chhattisgarh State, standing at 200 meters above sea level. The site was developed by Pannya Metta Sangha as a Buddhist pilgrimage and meditation centre in the heart of central India.</p>
+      <p data-en>The International Buddhist Conference held here on 6th February 2017 drew participants from Japan, Thailand, Sri Lanka, Tibet, Korea, Taiwan, and across India — drawing over 5 lakh devotees. It has since become a landmark Buddhist site in the region.</p>
+      <p data-ja>プラドニャギリ（「智慧の丘」）は、チャッティースガル州ラージナンドガオン地区ドンガルガル地方に位置する海抜200メートルの霊的に重要な山です。2017年2月6日に開催された国際仏教会議には、日本、タイ、スリランカ、チベット、韓国、台湾からの参加者を含む50万人以上が集まりました。</p>
+    </div>
+
+    <div class="info-card ic-blue">
+      <h2 data-en>🗿 The Buddha Statue</h2>
+      <h2 data-ja>🗿 仏陀像</h2>
+      <p data-en>The centrepiece of Pradnyagiri is a magnificent 30-foot meditating Buddha statue, installed on a 30-foot elevated stage — making it visible from great distances. The statue depicts the Dhyana mudra (meditation posture) and radiates a profound sense of peace and spiritual serenity.</p>
+      <p data-en>The Tathagat Buddha statue communicates the universal message of world peace and brotherhood, welcoming all who climb the hill to sit in the presence of the Awakened One.</p>
+      <p data-ja>プラドニャギリの中心は30フィートの台座の上に安置された30フィートの瞑想する仏陀像です。禅定印（瞑想の印相）を結ぶこの仏陀像は深い平和と精神的静寂を発散し、世界平和と友愛の普遍的メッセージを伝えています。</p>
+      <div class="img-grid-2">
+        <img src="" alt="Close-up of Buddha statue at Pradnyagiri">
+        <img src="" alt="Devotees at Pradnyagiri">
+      </div>
+    </div>
+
+    <div class="info-card ic-blue">
+      <h2 data-en>🌟 Social Service Work & Annual Gathering</h2>
+      <h2 data-ja>🌟 社会奉仕活動と年次集会</h2>
+      <p data-en>The 6th February annual Buddhist gathering at Pradnyagiri is one of the most anticipated events in the Sangha's calendar. Thousands of devotees journey to the hilltop for prayers, dhamma talks, cultural programs, and community service activities.</p>
+      <p data-en>Social welfare activities organised in conjunction with this gathering include free medical check-ups, distribution of educational materials, and community outreach programs for surrounding villages. The foundation stone of the statue and the site's social service mission remain deeply intertwined.</p>
+      <p data-ja>プラドニャギリでの2月6日の年次仏教集会はサンガの暦で最も待ち望まれる行事の一つです。何千人もの信者が丘の頂上に向かい、祈り、法話、文化プログラム、地域奉仕活動に参加します。</p>
+      <div class="img-grid-4">
+        <img src="" alt="Mass gathering at Pradnyagiri">
+        <img src="" alt="Medical camp at Pradnyagiri">
+        <img src="" alt="Cultural programs">
+        <img src="" alt="Community service">
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: 7th FEBRUARY – DHAMMASANGASHTI
+══════════════════════════════════════════════ -->
+<div id="page-feb7" class="subpage">
+  <div class="sp-hero sp-feb7">
+    <div class="date-badge b-green" data-en>Memorial Services · Day 2</div>
+    <div class="date-badge b-green" data-ja>追悼サービス・第2日</div>
+    <h1 data-en>7th February — Dhammasangashti</h1>
+    <h1 data-ja>2月7日 — ダンマサンガシュティ</h1>
+    <p class="sp-hero-sub" data-en>The Grand Buddhist Convention — bringing thousands together in the spirit of Dhamma, wisdom, and community fellowship.</p>
+    <p class="sp-hero-sub" data-ja>盛大な仏教大会 — ダンマ、智慧、コミュニティの友愛の精神で何千人もが集います。</p>
+  </div>
+  <div class="sp-content">
+
+    <!-- Year selection tabs -->
+    <div class="year-tabs">
+      <button class="year-tab active" onclick="switchYear('2025')" id="tab-2025">2025</button>
+      <button class="year-tab" onclick="switchYear('2026')" id="tab-2026">2026</button>
+    </div>
+
+    <!-- 2025 Content -->
+    <div class="year-content active" id="year-2025">
+      <div class="info-card ic-green">
+        <h2 data-en>📅 Dhammasangashti 2025</h2>
+        <h2 data-ja>📅 ダンマサンガシュティ 2025</h2>
+        <p data-en>The 2025 Dhammasangashti was a landmark gathering at Mahasamadhibhumi, Pauni — bringing together Buddhist scholars, monks, devotees, and community members from across India and internationally.</p>
+        <p data-ja>2025年のダンマサンガシュティはパウニのマハーサマーディブーミで開催された画期的な集会で、インド全土および国際的な仏教学者、僧侶、信者、コミュニティメンバーが一堂に会しました。</p>
+        <h3 data-en>Speakers</h3>
+        <h3 data-ja>講演者</h3>
+        <ul>
+          <li data-en>Venerable Sangharatna Manake — Keynote Address</li>
+          <li data-en>Distinguished Buddhist scholars from Japan and India</li>
+          <li data-en>Representatives from Saichoji Temple, Japan</li>
+          <li data-en>Social welfare leaders and community representatives</li>
+          <li data-ja>サンガラトナ・マナケ師 — 基調講演</li>
+          <li data-ja>日本とインドからの著名な仏教学者</li>
+          <li data-ja>日本・西光寺の代表者</li>
+          <li data-ja>社会福祉リーダーとコミュニティ代表者</li>
+        </ul>
+        <h3 data-en>Program Details 2025</h3>
+        <h3 data-ja>2025年プログラム詳細</h3>
+        <div class="sch-grid">
+          <div class="si si-green"><div class="st st-green" data-en>Radisson Blu Details</div><div class="st st-green" data-ja>ラディソン・ブルー詳細</div><div class="sd" data-en>VIP accommodation and conference facilities at Radisson Blu, Nagpur for visiting dignitaries and international guests</div><div class="sd" data-ja>来賓と国際ゲストのためのナーグプル・ラディソン・ブルーのVIP宿泊・会議施設</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>Airport Information</div><div class="st st-green" data-ja>空港情報</div><div class="sd" data-en>Dr. Babasaheb Ambedkar International Airport, Nagpur — transfers arranged for all outstation participants</div><div class="sd" data-ja>バーバーサーヘブ・アンベードカル国際空港、ナーグプル — 遠方参加者の送迎手配あり</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>Route Map</div><div class="st st-green" data-ja>ルートマップ</div><div class="sd" data-en>Nagpur → Pauni (95 km) via NH-53. Buses and special transport arranged from Nagpur</div><div class="sd" data-ja>ナーグプル → パウニ（95km）NH-53経由。ナーグプルからのバスと特別輸送手配あり</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>Moto Program</div><div class="st st-green" data-ja>モトプログラム</div><div class="sd" data-en>Motorcycle rally from Nagpur to Pauni — spreading the message of Dhamma across communities</div><div class="sd" data-ja>ナーグプルからパウニへのバイクラリー — コミュニティ全体にダンマのメッセージを広める</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>DeekshaBhumi Event</div><div class="st st-green" data-ja>ディークシャブーミ行事</div><div class="sd" data-en>Special puja and rally at Deekshabhoomi, Nagpur — the sacred site of Dr. Ambedkar's historic conversion</div><div class="sd" data-ja>ナーグプル・ディークシャブーミでの特別プージャとラリー — アンベードカル博士の歴史的改宗の聖地</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>Sugar Vihar Rally</div><div class="st st-green" data-ja>シュガル・ヴィハーラ集会</div><div class="sd" data-en>Community gathering at Sugar Vihar — promoting Dhamma awareness and social welfare outreach</div><div class="sd" data-ja>シュガル・ヴィハーラでのコミュニティ集会 — ダンマ意識と社会福祉普及を促進</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>School Programs</div><div class="st st-green" data-ja>学校プログラム</div><div class="sd" data-en>Interactive sessions at PMS School — essay writing, cultural performances, and prize distribution</div><div class="sd" data-ja>PMS学校での作文、文化公演、賞の授与などのインタラクティブセッション</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>Convention Centre</div><div class="st st-green" data-ja>コンベンションセンター</div><div class="sd" data-en>Grand Dhammasangashti at Mahasamadhibhumi Convention Centre — main dhamma discourses and cultural events</div><div class="sd" data-ja>マハーサマーディブーミ・コンベンションセンターでの大ダンマサンガシュティ — 主要な法話と文化行事</div></div>
+        </div>
+      </div>
+      <div class="info-card ic-green">
+        <h2 data-en>📖 2025 Magazine</h2>
+        <h2 data-ja>📖 2025年雑誌</h2>
+        <p data-en>The 2025 Mahasamadhibhumi Magazine captures the highlights, programs, and insights from Dhammasangashti 2025.</p>
+        <p data-ja>2025年マハーサマーディブーミ雑誌は2025年ダンマサンガシュティのハイライト、プログラム、洞察を記録しています。</p>
+        <a href="" class="pdf-link">📄 Download 2025 Magazine</a>
+      </div>
+      <div class="info-card ic-green">
+        <h2 data-en>📸 Photo Gallery 2025</h2>
+        <h2 data-ja>📸 フォトギャラリー 2025</h2>
+        <div class="img-grid-4">
+          <img src="" alt="Dhammasangashti 2025 opening ceremony">
+          <img src="" alt="Dhamma discourse 2025">
+          <img src="" alt="Cultural program 2025">
+          <img src="" alt="Community gathering 2025">
+        </div>
+      </div>
+    </div>
+
+    <!-- 2026 Content -->
+    <div class="year-content" id="year-2026">
+      <div class="info-card ic-green">
+        <h2 data-en>📅 Dhammasangashti 2026</h2>
+        <h2 data-ja>📅 ダンマサンガシュティ 2026</h2>
+        <p data-en>Dhammasangashti 2026 continues the grand tradition with expanded programs, international participation, and a renewed focus on youth engagement and social welfare.</p>
+        <p data-ja>ダンマサンガシュティ2026は拡張されたプログラム、国際的参加、青年参加と社会福祉への新たな焦点で盛大な伝統を継続します。</p>
+        <h3 data-en>Speakers</h3>
+        <h3 data-ja>講演者</h3>
+        <ul>
+          <li data-en>Venerable Sangharatna Manake — Keynote Address</li>
+          <li data-en>International Buddhist scholars — Japan, Sri Lanka, Thailand</li>
+          <li data-en>Youth leaders and social welfare advocates</li>
+          <li data-en>Representatives of allied Buddhist organisations across India</li>
+          <li data-ja>サンガラトナ・マナケ師 — 基調講演</li>
+          <li data-ja>国際的な仏教学者 — 日本、スリランカ、タイ</li>
+          <li data-ja>青年リーダーと社会福祉提唱者</li>
+          <li data-ja>インド全土の提携仏教団体代表者</li>
+        </ul>
+        <div class="sch-grid">
+          <div class="si si-green"><div class="st st-green" data-en>Radisson Blu Details</div><div class="st st-green" data-ja>ラディソン・ブルー詳細</div><div class="sd" data-en>Accommodation block-booking at Radisson Blu, Nagpur for all international guests</div><div class="sd" data-ja>国際ゲスト向けナーグプル・ラディソン・ブルーのブロック予約</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>Route Map 2026</div><div class="st st-green" data-ja>2026年ルートマップ</div><div class="sd" data-en>Extended route from Nagpur → Chandrapur → Pauni. Special shuttle services every 2 hours</div><div class="sd" data-ja>ナーグプル → チャンドラプール → パウニへの拡張ルート。2時間ごとのシャトルサービス</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>DeekshaBhumi 2026</div><div class="st st-green" data-ja>ディークシャブーミ 2026</div><div class="sd" data-en>70th anniversary special puja marking Dr. Ambedkar's conversion at Deekshabhoomi</div><div class="sd" data-ja>ディークシャブーミでのアンベードカル博士改宗70周年記念特別プージャ</div></div>
+          <div class="si si-green"><div class="st st-green" data-en>Youth Convention 2026</div><div class="st st-green" data-ja>青年大会 2026</div><div class="sd" data-en>New dedicated youth wing launch event — with essay competition finals and cultural showcases</div><div class="sd" data-ja>新設の青年部立ち上げ行事 — 作文コンクール決勝と文化ショーケース</div></div>
+        </div>
+      </div>
+      <div class="info-card ic-green">
+        <h2 data-en>📸 Photo Gallery 2026</h2>
+        <h2 data-ja>📸 フォトギャラリー 2026</h2>
+        <div class="img-grid-4">
+          <img src="" alt="Dhammasangashti 2026 event">
+          <img src="" alt="2026 speakers and delegates">
+          <img src="" alt="Youth program 2026">
+          <img src="" alt="Community service 2026">
+        </div>
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: 8th FEBRUARY – MAHASAMADHIBHUMI DHAMMOTSAV
+══════════════════════════════════════════════ -->
+<div id="page-feb8" class="subpage">
+  <div class="sp-hero sp-feb8">
+    <div class="date-badge b-purple" data-en>Memorial Services · Day 3</div>
+    <div class="date-badge b-purple" data-ja>追悼サービス・第3日</div>
+    <h1 data-en>8th February — Mahasamadhibhumi Dhammotsav</h1>
+    <h1 data-ja>2月8日 — マハーサマーディブーミ・ダンモトサブ</h1>
+    <p class="sp-hero-sub" data-en>The Grand Dhammotsav at Mahasamadhi Bhoomi — rallies, vandana, dhamma discussions, and mass community participation on the banks of the Wainganga.</p>
+    <p class="sp-hero-sub" data-ja>マハーサマーディ・ブーミでの壮大なダンモトサブ — ワインガンガ川のほとりでの集会、礼拝、ダンマ討論、大規模な地域参加。</p>
+  </div>
+  <div class="sp-content">
+    <div class="img-grid-2" style="margin-bottom:30px;">
+      <img src="" alt="Dhammadhvaj Rally at Mahasamadhibhumi" style="height:220px;">
+      <img src="" alt="Vandana ceremony at the Stupa" style="height:220px;">
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>🚩 Dhammadhvaj Rally</h2>
+      <h2 data-ja>🚩 ダンマドヴァジャ・ラリー</h2>
+      <p data-en>The Dhammadhvaj (Dhamma Flag) Rally is the electrifying opening to the 8th February Dhammotsav. Thousands of devotees march from nearby towns and villages to Mahasamadhibhumi, carrying the blue-and-white Buddhist flag high as a symbol of unity, pride, and commitment to the Dhamma.</p>
+      <p data-en>The rally route passes through the historic areas of Pauni, bringing the message of Buddhism to every street and neighbourhood. The procession is accompanied by Buddhist songs, chanting, and the joyful energy of a community united in faith.</p>
+      <p data-ja>ダンマドヴァジャ（仏教旗）ラリーは2月8日のダンモトサブの電撃的な幕開けです。何千人もの信者が近隣の町や村からマハーサマーディブーミに向けて行進し、統一、誇り、ダンマへのコミットメントの象徴として青白の仏教旗を高く掲げます。</p>
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>🙏 Vandana at the Maha Stupa</h2>
+      <h2 data-ja>🙏 大仏塔での礼拝</h2>
+      <p data-en>The centrepiece of the 8th February program is the Vandana — the collective act of reverence — performed at the Mahasamadhibhumi Maha Stupa. Thousands gather in the shadow of this magnificent structure to offer flowers, incense, and prayers, and to recite the Vandana Gatha in unison.</p>
+      <p data-ja>2月8日のプログラムの中心はヴァンダナー（礼拝）— マハーサマーディブーミ大仏塔で行われる集合的な崇敬の行為です。何千人もがこの壮大な建造物の陰に集まり、花、お香、祈りを捧げ、礼拝偈を一斉に唱和します。</p>
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>🍱 Lunch Program & Community Feast</h2>
+      <h2 data-ja>🍱 昼食プログラムとコミュニティ饗宴</h2>
+      <p data-en>Following the Vandana, a community vegetarian feast is organised for all attendees. The lunch program is a beautiful expression of Dana — the spirit of giving — as volunteers prepare and serve thousands of meals to pilgrims, the poor, and all who attend.</p>
+      <p data-ja>礼拝に続き、全参加者のためのコミュニティ菜食饗宴が開催されます。昼食プログラムはダーナ（布施）の精神の美しい表現であり、ボランティアたちが巡礼者、貧困者、全参加者のために何千食もの食事を準備・提供します。</p>
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>💬 Dhamma Discussions & Public Participation</h2>
+      <h2 data-ja>💬 ダンマ討論と大衆参加</h2>
+      <p data-en>The afternoon of 8th February is dedicated to Dhamma discussions — open forums where monks, scholars, and lay practitioners engage in dialogue on Buddhist teachings, social issues, and community welfare. These sessions are open to all, regardless of background.</p>
+      <p data-en>Special sessions for women, youth, and children are also organised. Public participation is warmly encouraged, and the convention centre becomes a vibrant marketplace of ideas, teachings, and community connection.</p>
+      <p data-ja>2月8日の午後はダンマ討論に捧げられます。僧侶、学者、在家修行者が仏教の教え、社会問題、地域福祉について対話するオープンフォーラムです。背景を問わずすべての方に開かれています。</p>
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>📸 Photo Gallery</h2>
+      <h2 data-ja>📸 フォトギャラリー</h2>
+      <div class="img-grid-4">
+        <img src="" alt="Dhammadhvaj rally procession">
+        <img src="" alt="Vandana at the stupa">
+        <img src="" alt="Community lunch program">
+        <img src="" alt="Dhamma discussion session">
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: BALAGHAT
+══════════════════════════════════════════════ -->
+<div id="page-balaghat" class="subpage">
+  <div class="sp-hero sp-balaghat">
+    <div class="date-badge b-green" data-en>Balaghat Program</div>
+    <div class="date-badge b-green" data-ja>バラガット・プログラム</div>
+    <h1 data-en>Balaghat — Triratna Buddha Vihar</h1>
+    <h1 data-ja>バラガット — トリラトナ・ブッダ・ヴィハーラ</h1>
+    <p class="sp-hero-sub" data-en>The Opening of Triratna Buddha Vihar in Balaghat — a new Meditation Center bringing the light of Dhamma to central India.</p>
+    <p class="sp-hero-sub" data-ja>バラガットのトリラトナ・ブッダ・ヴィハーラ開所式 — ダンマの光を中部インドにもたらす新しい瞑想センター。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-green">
+      <h2 data-en>🧘 Meditation Center & Triratna Buddha Vihar</h2>
+      <h2 data-ja>🧘 瞑想センターとトリラトナ・ブッダ・ヴィハーラ</h2>
+      <p data-en>The Triratna Buddha Vihar in Balaghat represents a significant expansion of Pannya Metta Sangha's mission into the Balaghat district of Madhya Pradesh. The Vihar serves as a meditation centre, dhamma study hall, and community gathering space for the local Buddhist community.</p>
+      <p data-en>The meditation center offers regular sittings, dhamma classes, and spiritual guidance to practitioners from the surrounding areas — making the path of the Buddha accessible to a new generation of seekers.</p>
+      <p data-ja>バラガットのトリラトナ・ブッダ・ヴィハーラは、パンニャ・メッタ・サンガの使命のマディヤ・プラデーシュ州バラガット地区への重要な拡大を表しています。ヴィハーラは瞑想センター、ダンマ学習ホール、地域コミュニティの集合場所として機能します。</p>
+    </div>
+
+    <div class="info-card ic-green">
+      <h2 data-en>📜 History of the Vihar</h2>
+      <h2 data-ja>📜 ヴィハーラの歴史</h2>
+      <p data-en>The Triratna Buddha Vihar was established through the dedicated efforts of the Balaghat Buddhist community in collaboration with Pannya Metta Sangha. The founding was inspired by the vision of creating a permanent spiritual home for Buddhists in the Balaghat region — a place of practice, learning, and community gathering.</p>
+      <p data-ja>トリラトナ・ブッダ・ヴィハーラは、パンニャ・メッタ・サンガとの協力のもと、バラガット仏教コミュニティの献身的な努力によって設立されました。バラガット地域の仏教徒のための恒久的な精神的な家を作るビジョンに触発されました。</p>
+      <div class="img-grid-3">
+        <img src="" alt="Triratna Buddha Vihar Balaghat">
+        <img src="" alt="Opening ceremony">
+        <img src="" alt="Interior of the Vihar">
+      </div>
+    </div>
+
+    <div class="info-card ic-green">
+      <h2 data-en>👨‍🏫 Dhammashikar Bhanteji & Dhammatap Bhanteji</h2>
+      <h2 data-ja>👨‍🏫 ダンマシカール・バンテジとダンマタップ・バンテジ</h2>
+      <div class="leader-grid">
+        <img src="" alt="Dhammashikar Bhanteji" class="leader-photo">
+        <div>
+          <h3 data-en>Dhammashikar Bhanteji</h3>
+          <h3 data-ja>ダンマシカール・バンテジ</h3>
+          <p data-en>Dhammashikar Bhanteji is a revered monk who has played a pivotal role in establishing and guiding the Triratna Buddha Vihar. His deep knowledge of Dhamma, compassionate teaching style, and tireless service to the community have made him a beloved spiritual guide in the Balaghat region.</p>
+          <p data-ja>ダンマシカール・バンテジはトリラトナ・ブッダ・ヴィハーラの設立と指導に重要な役割を果たした尊敬される僧侶です。ダンマの深い知識、慈悲ある教えのスタイル、地域への絶え間ない奉仕でバラガット地域で愛される精神的ガイドとなっています。</p>
+        </div>
+      </div>
+      <div class="leader-grid">
+        <img src="" alt="Dhammatap Bhanteji" class="leader-photo">
+        <div>
+          <h3 data-en>Dhammatap Bhanteji</h3>
+          <h3 data-ja>ダンマタップ・バンテジ</h3>
+          <p data-en>Dhammatap Bhanteji brings the warmth of Metta and the clarity of Pannya to his spiritual work in Balaghat. A dedicated practitioner and teacher, he has been instrumental in growing the local sangha and in making the Vihar a vibrant centre of Buddhist life.</p>
+          <p data-ja>ダンマタップ・バンテジはバラガットでの精神的活動にメッタの温かさとパンニャの明晰さをもたらします。献身的な修行者・教師として、地方のサンガを育て、ヴィハーラを仏教生活の活発な中心地にすることに貢献しました。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card ic-green">
+      <h2 data-en>🎯 Programs & Events at Balaghat</h2>
+      <h2 data-ja>🎯 バラガットでのプログラムと行事</h2>
+      <div class="sch-grid">
+        <div class="si si-green"><div class="st st-green" data-en>Dhamma Discourse</div><div class="st st-green" data-ja>ダンマ法話</div><div class="sd" data-en>Regular discourse sessions by Dhammashikar Bhanteji and Dhammatap Bhanteji on Buddhist teachings and ethics</div><div class="sd" data-ja>仏教の教えと倫理に関するバンテジによる定期的な法話セッション</div></div>
+        <div class="si si-green"><div class="st st-green" data-en>Rally</div><div class="st st-green" data-ja>ラリー</div><div class="sd" data-en>Community rallies spreading Buddhist awareness and the message of Dhamma through Balaghat district</div><div class="sd" data-ja>バラガット地区全体に仏教意識とダンマのメッセージを広めるコミュニティラリー</div></div>
+        <div class="si si-green"><div class="st st-green" data-en>Chivar Daan</div><div class="st st-green" data-ja>チヴァラ・ダーン</div><div class="sd" data-en>Offering of robes (chivar) to the monks — a meritorious act of generosity and community support</div><div class="sd" data-ja>僧侶への袈裟（チヴァラ）の供養 — 功徳ある寛大さとコミュニティ支援の行為</div></div>
+        <div class="si si-green"><div class="st st-green" data-en>Opening Ceremony</div><div class="st st-green" data-ja>開所式</div><div class="sd" data-en>Grand inauguration of the Triratna Buddha Vihar with religious rites, community celebration, and dhamma talks</div><div class="sd" data-ja>宗教儀式、コミュニティのお祝い、法話を伴うトリラトナ・ブッダ・ヴィハーラの盛大な開所式</div></div>
+        <div class="si si-green"><div class="st st-green" data-en>Sambhashan</div><div class="st st-green" data-ja>サンバーシャン</div><div class="sd" data-en>Community dialogue sessions — open discussions on Dhamma, social issues, and community development</div><div class="sd" data-ja>ダンマ、社会問題、地域開発に関するオープンな議論によるコミュニティ対話セッション</div></div>
+        <div class="si si-green"><div class="st st-green" data-en>Meditation Center Activities</div><div class="st st-green" data-ja>瞑想センター活動</div><div class="sd" data-en>Daily meditation sittings, mindfulness workshops, and vipassana retreats for all levels</div><div class="sd" data-ja>すべてのレベルのための日々の坐禅、マインドフルネスワークショップ、ヴィパッサナーリトリート</div></div>
+      </div>
+      <div class="img-grid-4">
+        <img src="" alt="Balaghat Dhamma Discourse">
+        <img src="" alt="Community rally Balaghat">
+        <img src="" alt="Chivar Daan ceremony">
+        <img src="" alt="Sambhashan dialogue">
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: ESSAY COMPETITION
+══════════════════════════════════════════════ -->
+<div id="page-essay" class="subpage">
+  <div class="sp-hero sp-essay">
+    <div class="date-badge b-purple" data-en>Annual Program</div>
+    <div class="date-badge b-purple" data-ja>年次プログラム</div>
+    <h1 data-en>Mahasamadhibhumi Essay Competition</h1>
+    <h1 data-ja>マハーサマーディブーミ作文コンクール</h1>
+    <p class="sp-hero-sub" data-en>Inspiring young minds through the power of words — nurturing a new generation of Buddhist scholars and social thinkers.</p>
+    <p class="sp-hero-sub" data-ja>言葉の力を通じて若い心を刺激する — 仏教学者と社会思想家の新世代を育成します。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-purple">
+      <h2 data-en>✏️ Competition Overview</h2>
+      <h2 data-ja>✏️ コンクール概要</h2>
+      <p data-en>The Mahasamadhibhumi Essay Competition is an annual academic event organised by Pannya Metta Sangha to engage students with Buddhist philosophy, Dr. Ambedkar's legacy, and themes of social justice and community welfare.</p>
+      <p data-en>Open to students from primary to post-graduate level, the competition encourages young people to explore, research, and articulate ideas on topics that matter deeply to our community and our world.</p>
+      <p data-ja>マハーサマーディブーミ作文コンクールは、パンニャ・メッタ・サンガが主催する年次学術行事で、学生たちを仏教哲学、アンベードカル博士の遺産、社会正義とコミュニティ福祉のテーマに参加させます。</p>
+      <div class="img-grid-2">
+        <img src="" alt="Students participating in essay competition">
+        <img src="" alt="Prize distribution ceremony">
+      </div>
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>🎓 Student Participation</h2>
+      <h2 data-ja>🎓 学生参加</h2>
+      <p data-en>Each year, hundreds of students from schools and colleges across the region participate in the competition. Topics are drawn from Buddhist teachings, Dr. Ambedkar's life and work, social issues, and contemporary community challenges.</p>
+      <p data-en>Students submit essays that are evaluated by a panel of distinguished scholars and educators. The competition fosters critical thinking, research skills, and an appreciation for the intellectual riches of Buddhist thought.</p>
+      <p data-ja>毎年、地域の学校・大学から何百人もの学生がコンクールに参加します。仏教の教え、アンベードカル博士の生涯と業績、社会問題、現代のコミュニティの課題から題材が選ばれます。</p>
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>🏆 Annual Winners</h2>
+      <h2 data-ja>🏆 年次受賞者</h2>
+      <p data-en>Winners are recognized at the annual Dhammasangashti ceremony, receiving certificates, medals, and prizes in the presence of Venerable Sangharatna Manake and the assembled Sangha community.</p>
+      <div class="achievement-list">
+        <div class="ach-item"><div class="ach-icon">🥇</div><div><div class="ach-title" data-en>First Prize</div><div class="ach-title" data-ja>1等賞</div><div class="ach-desc" data-en>Certificate, medal, and cash prize — presented at Dhammasangashti</div><div class="ach-desc" data-ja>証明書、メダル、賞金 — ダンマサンガシュティで授与</div></div></div>
+        <div class="ach-item"><div class="ach-icon">🥈</div><div><div class="ach-title" data-en>Second Prize</div><div class="ach-title" data-ja>2等賞</div><div class="ach-desc" data-en>Certificate, medal, and books — presented at Dhammasangashti</div><div class="ach-desc" data-ja>証明書、メダル、書籍 — ダンマサンガシュティで授与</div></div></div>
+        <div class="ach-item"><div class="ach-icon">🥉</div><div><div class="ach-title" data-en>Third Prize</div><div class="ach-title" data-ja>3等賞</div><div class="ach-desc" data-en>Certificate and books — presented at Dhammasangashti</div><div class="ach-desc" data-ja>証明書と書籍 — ダンマサンガシュティで授与</div></div></div>
+        <div class="ach-item"><div class="ach-icon">🌟</div><div><div class="ach-title" data-en>Special Recognition</div><div class="ach-title" data-ja>特別表彰</div><div class="ach-desc" data-en>Outstanding entries receive special mention and publication in the annual magazine</div><div class="ach-desc" data-ja>優れた作品は年次雑誌に特別掲載されます</div></div></div>
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: HEADQUARTERS
+══════════════════════════════════════════════ -->
+<div id="page-hq" class="subpage">
+  <div class="sp-hero sp-hq">
+    <div class="date-badge b-blue" data-en>Nagpur, Maharashtra</div>
+    <div class="date-badge b-blue" data-ja>マハーラーシュトラ州ナーグプル</div>
+    <h1 data-en>Pannya Metta Sangha Headquarters</h1>
+    <h1 data-ja>パンニャ・メッタ・サンガ本部</h1>
+    <p class="sp-hero-sub" data-en>The heart of our organisation — Buddha Nag Vihara, Hardasnagar, Nagpur, where our mission begins and our community is nurtured.</p>
+    <p class="sp-hero-sub" data-ja>私たちの組織の心臓部 — ナーグプル・ハルダースナガルのブッダ・ナグ・ヴィハーラ。私たちの使命が始まり、コミュニティが育まれる場所。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-blue">
+      <h2 data-en>🏢 Headquarters Information</h2>
+      <h2 data-ja>🏢 本部情報</h2>
+      <p data-en>The Pannya Metta Sangha Head Office is located at Buddha Nag Vihara, Cr. No. 15/21, Hardasnagar (Lashkaribagh), Nagpur, Maharashtra, India. Registered under No. MAH 586/82, F-3849(NAG), the headquarters serves as the administrative, spiritual, and programmatic hub of all Sangha activities.</p>
+      <p data-ja>パンニャ・メッタ・サンガ本部はインド・マハーラーシュトラ州ナーグプル、ハルダースナガル（ラシュカリバーグ）Cr. No. 15/21のブッダ・ナグ・ヴィハーラにあります。登録番号：MAH 586/82, F-3849(NAG)。</p>
+      <div class="img-grid-2">
+        <img src="" alt="PMS Headquarters building">
+        <img src="" alt="Buddha Nag Vihara Nagpur">
+      </div>
+    </div>
+
+    <div class="info-card ic-blue">
+      <h2 data-en>🏗️ Organisation Structure</h2>
+      <h2 data-ja>🏗️ 組織構造</h2>
+      <div class="sch-grid">
+        <div class="si si-blue"><div class="st st-blue" data-en>President</div><div class="st st-blue" data-ja>会長</div><div class="se" data-en>Venerable Sangharatna Manake</div><div class="se" data-ja>僧侶サンガラトナ・マナケ師</div></div>
+        <div class="si si-blue"><div class="st st-blue" data-en>General Secretary</div><div class="st st-blue" data-ja>事務局長</div><div class="se" data-en>Key administrative leadership and coordination</div><div class="se" data-ja>主要な行政リーダーシップと調整</div></div>
+        <div class="si si-blue"><div class="st st-blue" data-en>Balsadan Committee</div><div class="st st-blue" data-ja>バルサダン委員会</div><div class="se" data-en>Overseeing children's home and welfare operations</div><div class="se" data-ja>子どもの家と福祉活動の監督</div></div>
+        <div class="si si-blue"><div class="st st-blue" data-en>Social Welfare Division</div><div class="st st-blue" data-ja>社会福祉部門</div><div class="se" data-en>Medical camps, education, and community programs</div><div class="se" data-ja>医療キャンプ、教育、コミュニティプログラム</div></div>
+      </div>
+    </div>
+
+    <div class="info-card ic-blue">
+      <h2 data-en>👶 Children at Headquarters</h2>
+      <h2 data-ja>👶 本部の子どもたち</h2>
+      <p data-en>The headquarters is not merely an administrative centre — it is a living community. Children from the Balsadan program sometimes participate in headquarters activities, and the space regularly hosts community gatherings, dhamma sessions, and educational programs.</p>
+      <p data-ja>本部は単なる行政センターではなく、生きたコミュニティです。バルサダンプログラムの子どもたちが本部活動に参加することもあり、定期的にコミュニティ集会、ダンマセッション、教育プログラムが開催されます。</p>
+      <div class="img-grid-4">
+        <img src="" alt="Children at PMS Headquarters">
+        <img src="" alt="Mentor with children at HQ">
+        <img src="" alt="Community program at HQ">
+        <img src="" alt="Dhamma session at headquarters">
+      </div>
+    </div>
+
+    <div class="info-card ic-blue">
+      <h2 data-en>👨‍🏫 Mentors & Guides</h2>
+      <h2 data-ja>👨‍🏫 メンターとガイド</h2>
+      <p data-en>The headquarters benefits from the dedication of numerous mentors, volunteers, and guides who support the Sangha's multifaceted mission. From superintendents at Balsadan to teachers at the school, from volunteer doctors to dhamma instructors — each plays a vital role in the life of the community.</p>
+      <p data-ja>本部は、多面的な使命を支える多くのメンター、ボランティア、ガイドの献身から恩恵を受けています。バルサダンの主任から学校の教師まで、ボランティア医師からダンマ指導者まで — それぞれがコミュニティの生活に不可欠な役割を果たしています。</p>
+      <div class="img-grid-2">
+        <img src="" alt="Mentors at PMS Headquarters">
+        <img src="" alt="Volunteers at PMS">
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: SCHOOL
+══════════════════════════════════════════════ -->
+<div id="page-school" class="subpage">
+  <div class="sp-hero sp-school">
+    <div class="date-badge b-green" data-en>Education</div>
+    <div class="date-badge b-green" data-ja>教育</div>
+    <h1 data-en>Pannya Metta Sangha School</h1>
+    <h1 data-ja>パンニャ・メッタ・サンガ学校</h1>
+    <p class="sp-hero-sub" data-en>Nurturing minds with wisdom — a school rooted in Buddhist values, academic excellence, and community responsibility.</p>
+    <p class="sp-hero-sub" data-ja>智慧で心を育む — 仏教の価値観、学術的卓越性、地域責任に根ざした学校。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-green">
+      <h2 data-en>🏫 School Overview</h2>
+      <h2 data-ja>🏫 学校概要</h2>
+      <p data-en><strong data-en>School Name:</strong> Pannya Metta Sangha School</p>
+      <p data-en><strong data-en>Motto:</strong> "Seek Wisdom, Cultivate Compassion, Serve Community" — inspired by the Three Jewels of Buddhism and Dr. Ambedkar's call for Education, Agitate, Organise.</p>
+      <p data-ja><strong data-ja>学校名：</strong>パンニャ・メッタ・サンガ学校</p>
+      <p data-ja><strong data-ja>モットー：</strong>「智慧を求め、慈悲を育み、地域に奉仕する」— 仏教の三宝とアンベードカル博士の「教育、蜂起、組織化」の呼びかけに触発されています。</p>
+      <div class="img-grid-2">
+        <img src="" alt="PMS School building">
+        <img src="" alt="Students at PMS School">
+      </div>
+    </div>
+
+    <div class="info-card ic-green">
+      <h2 data-en>👩‍💼 Principal</h2>
+      <h2 data-ja>👩‍💼 校長</h2>
+      <div class="leader-grid">
+        <div class="leader-photo-ph">👩‍🏫</div>
+        <div>
+          <p data-en>The Principal of Pannya Metta Sangha School leads with a vision of holistic education — combining academic rigour with Buddhist values of compassion, mindfulness, and social responsibility. Under their guidance, the school has become a model institution in the region for values-based education.</p>
+          <p data-ja>パンニャ・メッタ・サンガ学校の校長は、学術的厳格さと慈悲、マインドフルネス、社会的責任の仏教的価値観を組み合わせた全人教育のビジョンで指導しています。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card ic-green">
+      <h2 data-en>👨‍🏫 Teacher Profiles</h2>
+      <h2 data-ja>👨‍🏫 教師プロフィール</h2>
+      <div class="teacher-grid">
+        <div class="teacher-card">
+          <img src="" alt="Teacher" class="teacher-photo">
+          <div class="teacher-name" data-en>Teacher Name</div>
+          <div class="teacher-name" data-ja>教師名</div>
+          <div class="teacher-subject" data-en>Subject / Department</div>
+          <div class="teacher-subject" data-ja>科目・部門</div>
+          <div class="teacher-bio" data-en>A dedicated educator with deep commitment to Buddhist values and academic excellence, nurturing students with wisdom and compassion.</div>
+          <div class="teacher-bio" data-ja>仏教的価値観と学術的卓越性への深いコミットメントを持つ献身的な教育者。</div>
+        </div>
+        <div class="teacher-card">
+          <img src="" alt="Teacher" class="teacher-photo">
+          <div class="teacher-name" data-en>Teacher Name</div>
+          <div class="teacher-name" data-ja>教師名</div>
+          <div class="teacher-subject" data-en>Subject / Department</div>
+          <div class="teacher-subject" data-ja>科目・部門</div>
+          <div class="teacher-bio" data-en>Passionate about inspiring young learners through creative teaching methods rooted in mindfulness and community engagement.</div>
+          <div class="teacher-bio" data-ja>マインドフルネスとコミュニティ参加に根ざした創造的な教授法で若い学習者を励ますことに情熱的。</div>
+        </div>
+        <div class="teacher-card">
+          <img src="" alt="Teacher" class="teacher-photo">
+          <div class="teacher-name" data-en>Teacher Name</div>
+          <div class="teacher-name" data-ja>教師名</div>
+          <div class="teacher-subject" data-en>Subject / Department</div>
+          <div class="teacher-subject" data-ja>科目・部門</div>
+          <div class="teacher-bio" data-en>An experienced guide in both academic and spiritual development, helping students discover their potential and purpose.</div>
+          <div class="teacher-bio" data-ja>学術的・精神的発達の両方における経験豊かなガイド。学生が潜在能力と目的を発見するのを支援。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card ic-green">
+      <h2 data-en>🎉 Annual Programs</h2>
+      <h2 data-ja>🎉 年次プログラム</h2>
+      <div class="sch-grid">
+        <div class="si si-green"><div class="st st-green" data-en>Annual Day</div><div class="st st-green" data-ja>年次発表会</div><div class="sd" data-en>Grand celebration featuring cultural performances, prize distribution, and community gathering</div><div class="sd" data-ja>文化公演、賞の授与、コミュニティ集会を特徴とする盛大な祝典</div></div>
+        <div class="si si-green"><div class="st st-green" data-en>Buddha Jayanti</div><div class="st st-green" data-ja>仏誕祭</div><div class="sd" data-en>Celebration of the Buddha's birth, enlightenment and Parinirvana with dhamma activities</div><div class="sd" data-ja>ダンマ活動を伴う仏陀の誕生、悟り、大般涅槃の祝典</div></div>
+        <div class="si si-green"><div class="st st-green" data-en>Ambedkar Jayanti</div><div class="st st-green" data-ja>アンベードカル誕生祭</div><div class="sd" data-en>Programs honouring Dr. Ambedkar's life and legacy — essays, debates, and cultural performances</div><div class="sd" data-ja>アンベードカル博士の生涯と遺産を称えるプログラム — 作文、討論、文化公演</div></div>
+        <div class="si si-green"><div class="st st-green" data-en>Sports Day</div><div class="st st-green" data-ja>スポーツデー</div><div class="sd" data-en>Annual sports competition promoting teamwork, discipline, and physical wellness</div><div class="sd" data-ja>チームワーク、規律、身体的健康を促進する年次スポーツ大会</div></div>
+      </div>
+      <div class="img-grid-2">
+        <img src="" alt="School annual day program">
+        <img src="" alt="Students at school event">
+      </div>
+    </div>
+
+    <div class="info-card ic-green">
+      <h2 data-en>🏅 Student Achievements</h2>
+      <h2 data-ja>🏅 学生の実績</h2>
+      <p data-en>Students of Pannya Metta Sangha School have consistently excelled in academics, sports, arts, and social initiatives — bringing pride to the school and community.</p>
+      <div class="achievement-list">
+        <div class="ach-item"><div class="ach-icon">📚</div><div><div class="ach-title" data-en>Academic Excellence</div><div class="ach-title" data-ja>学術的卓越</div><div class="ach-desc" data-en>Consistently high results in board examinations with top district rankings</div><div class="ach-desc" data-ja>地区トップランキングで一貫して高い試験結果</div></div></div>
+        <div class="ach-item"><div class="ach-icon">⚽</div><div><div class="ach-title" data-en>Sports Achievements</div><div class="ach-title" data-ja>スポーツの実績</div><div class="ach-desc" data-en>District and state-level sports competitions — medals and trophies</div><div class="ach-desc" data-ja>地区・州レベルのスポーツ大会 — メダルとトロフィー</div></div></div>
+        <div class="ach-item"><div class="ach-icon">🎭</div><div><div class="ach-title" data-en>Cultural Awards</div><div class="ach-title" data-ja>文化賞</div><div class="ach-desc" data-en>Prizes in regional essay, drama, and art competitions</div><div class="ach-desc" data-ja>地域の作文、演劇、芸術コンクールでの受賞</div></div></div>
+        <div class="ach-item"><div class="ach-icon">🌟</div><div><div class="ach-title" data-en>Social Initiatives</div><div class="ach-title" data-ja>社会的取り組み</div><div class="ach-desc" data-en>Students recognised for community service, environmental drives, and welfare work</div><div class="ach-desc" data-ja>地域奉仕、環境活動、福祉活動で認められた学生</div></div></div>
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: SOCIAL WORK
+══════════════════════════════════════════════ -->
+<div id="page-social" class="subpage">
+  <div class="sp-hero sp-social">
+    <div class="date-badge b-red" data-en>Community Health & Welfare</div>
+    <div class="date-badge b-red" data-ja>地域の健康と福祉</div>
+    <h1 data-en>Social Work</h1>
+    <h1 data-ja>社会奉仕活動</h1>
+    <p class="sp-hero-sub" data-en>From medical camps to mobile hospitals — serving the most underserved communities with compassion and dignity.</p>
+    <p class="sp-hero-sub" data-ja>医療キャンプから移動病院まで — 慈悲と尊厳を持って最も恵まれないコミュニティに奉仕します。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-red">
+      <h2 data-en>🏥 Sironcha Gadchiroli Medical Camps</h2>
+      <h2 data-ja>🏥 シロンチャ・ガドチロリ医療キャンプ</h2>
+      <p data-en>The Sironcha region of Gadchiroli district — one of the most remote and tribal areas of Maharashtra — has been a priority focus of Pannya Metta Sangha's medical outreach. Regular medical camps bring essential healthcare services to communities that have historically been isolated from mainstream health infrastructure.</p>
+      <p data-ja>ガドチロリ地区のシロンチャ地域 — マハーラーシュトラ州で最も遠隔地にある部族地域の一つ — はパンニャ・メッタ・サンガの医療アウトリーチの優先重点地域です。定期的な医療キャンプが、歴史的に主流の医療インフラから隔離されていたコミュニティに必須の医療サービスをもたらします。</p>
+      <div class="img-grid-4">
+        <img src="" alt="Medical camp Sironcha Gadchiroli">
+        <img src="" alt="Doctor examining patient at camp">
+        <img src="" alt="Mobile hospital service">
+        <img src="" alt="Medicine distribution">
+      </div>
+    </div>
+
+    <div class="info-card ic-red">
+      <h2 data-en>🚑 Programs — Mobile Hospital</h2>
+      <h2 data-ja>🚑 プログラム — 移動病院</h2>
+      <p data-en>The Mobile Hospital initiative brings a team of doctors, nurses, and health workers directly to remote villages — providing general check-ups, specialist consultations, medicines, and referrals for advanced treatment. This service has benefitted thousands of rural residents who cannot access urban hospitals.</p>
+      <p data-ja>移動病院のイニシアチブは医師、看護師、医療従事者のチームを直接遠隔地の村に派遣します。一般的な検診、専門家相談、薬の提供、高度な治療のための紹介を行い、都市病院にアクセスできない何千人もの農村住民に利益をもたらしています。</p>
+    </div>
+
+    <div class="info-card ic-red">
+      <h2 data-en>🌊 Gujarat Help</h2>
+      <h2 data-ja>🌊 グジャラート支援</h2>
+      <p data-en>Following natural disasters and humanitarian crises in Gujarat, Pannya Metta Sangha mobilised relief efforts — providing food, clothing, medicines, and community support. This interstate outreach reflects the Sangha's commitment to serving all beings in need, regardless of region or background.</p>
+      <p data-ja>グジャラートでの自然災害と人道的危機に続き、パンニャ・メッタ・サンガは救援活動を組織しました。食料、衣類、薬、コミュニティサポートを提供し、地域や背景に関係なく困っているすべての存在に奉仕するサンガのコミットメントを反映しています。</p>
+    </div>
+
+    <div class="info-card ic-red">
+      <h2 data-en>😷 COVID Help</h2>
+      <h2 data-ja>😷 COVID支援</h2>
+      <p data-en>During the COVID-19 pandemic, Pannya Metta Sangha stepped up with comprehensive relief — distributing rations, masks, sanitisers, and medicines to affected communities. The Sangha coordinated with local authorities and healthcare workers to ensure the most vulnerable received support during this unprecedented crisis.</p>
+      <p data-ja>COVID-19パンデミックの際、パンニャ・メッタ・サンガは包括的な救援活動で立ち上がりました。影響を受けたコミュニティに食料、マスク、消毒液、薬を配布し、地方当局や医療従事者と協力して最も脆弱な人々が支援を受けられるよう調整しました。</p>
+    </div>
+
+    <div class="info-card ic-red">
+      <h2 data-en>👁️ Cataract Surgery Program</h2>
+      <h2 data-ja>👁️ 白内障手術プログラム</h2>
+      <p data-en>The cataract surgery program is one of the most impactful health initiatives of Pannya Metta Sangha. In partnership with Dr. Mahatme Eye Hospital, Nagpur, the Sangha has facilitated free eye camps, screenings, and surgeries for hundreds of rural patients.</p>
+      <p data-en>In a landmark 2017 camp at Pahela, Dist. Bhandara, over 200 villagers were screened. 36 cataract surgeries were subsequently performed at Mahatme Eye Hospital, with the Sangha arranging transport and accommodation for all patients.</p>
+      <p data-ja>白内障手術プログラムはパンニャ・メッタ・サンガの最もインパクトのある健康イニシアチブの一つです。ナーグプル・マハトメ眼科病院との協力により、何百人もの農村患者のための無料眼科キャンプ、スクリーニング、手術を促進してきました。</p>
+      <div class="img-grid-2">
+        <img src="" alt="Eye camp cataract screening">
+        <img src="" alt="Cataract surgery program">
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: MAGAZINE
+══════════════════════════════════════════════ -->
+<div id="page-magazine" class="subpage">
+  <div class="sp-hero sp-magazine">
+    <div class="date-badge b-blue" data-en>Publications</div>
+    <div class="date-badge b-blue" data-ja>出版物</div>
+    <h1 data-en>Mahasamadhibhumi Magazine</h1>
+    <h1 data-ja>マハーサマーディブーミ雑誌</h1>
+    <p class="sp-hero-sub" data-en>Our annual publication — capturing the spirit of the Dhammasangashti, Buddhist scholarship, and community stories from across our network.</p>
+    <p class="sp-hero-sub" data-ja>年次出版物 — ダンマサンガシュティの精神、仏教研究、ネットワーク全体のコミュニティストーリーを記録します。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-blue">
+      <h2 data-en>📚 About the Magazine</h2>
+      <h2 data-ja>📚 雑誌について</h2>
+      <p data-en>The Mahasamadhibhumi Magazine is an annual publication of Pannya Metta Sangha, released at the Dhammasangashti each year. It serves as a record of the organisation's activities, a platform for Buddhist scholarship, and a vehicle for community stories, essays, and news.</p>
+      <p data-en>The magazine features contributions from monks, scholars, students, and community members — offering a rich tapestry of Buddhist thought, social commentary, and cultural expression. It is also published in Japanese in collaboration with our friends at Saichoji Temple.</p>
+      <p data-ja>マハーサマーディブーミ雑誌はパンニャ・メッタ・サンガの年次出版物で、毎年ダンマサンガシュティで発行されます。組織の活動記録、仏教研究のプラットフォーム、コミュニティストーリー、作文、ニュースの媒体として機能します。西光寺との協力のもと日本語版も発行されています。</p>
+    </div>
+
+    <div class="info-card ic-blue">
+      <h2 data-en>📥 Download Issues</h2>
+      <h2 data-ja>📥 号のダウンロード</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
+        <a href="" class="pdf-link">📄 Magazine 2024</a>
+        <a href="" class="pdf-link">📄 Magazine 2025</a>
+        <a href="" class="pdf-link">📄 Magazine 2026</a>
+        <a href="" class="pdf-link" style="background:linear-gradient(135deg,#b45309,#d97706);">🌸 Japanese Magazine</a>
+      </div>
+    </div>
+
+    <div class="info-card ic-blue">
+      <h2 data-en>✍️ Contributing to the Magazine</h2>
+      <h2 data-ja>✍️ 雑誌への貢献</h2>
+      <p data-en>We welcome contributions from scholars, students, community members, and friends of the Sangha. Essays, articles, poetry, art, and photographs on Buddhist themes, social welfare, and community news are all welcome. Contact the headquarters for submission guidelines.</p>
+      <p data-ja>学者、学生、コミュニティメンバー、サンガの友人からの寄稿を歓迎します。仏教のテーマ、社会福祉、コミュニティニュースに関する作文、記事、詩、芸術、写真を歓迎します。</p>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: PRESIDENT
+══════════════════════════════════════════════ -->
+<div id="page-president" class="subpage">
+  <div class="sp-hero sp-president">
+    <div class="date-badge b-purple" data-en>Leadership</div>
+    <div class="date-badge b-purple" data-ja>指導者</div>
+    <h1 data-en>Venerable Sangharatna Manake</h1>
+    <h1 data-ja>僧侶サンガラトナ・マナケ師</h1>
+    <p class="sp-hero-sub" data-en>President of Pannya Metta Sangha — a guiding light of wisdom, compassion, and selfless service to humanity.</p>
+    <p class="sp-hero-sub" data-ja>パンニャ・メッタ・サンガ会長 — 智慧、慈悲、人類への無私の奉仕の導きの光。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-purple">
+      <h2 data-en>🙏 Biography</h2>
+      <h2 data-ja>🙏 経歴</h2>
+      <div class="leader-grid">
+        <img src="pmsimg/name.png" alt="Venerable Sangharatna Manake" class="leader-photo">
+        <div>
+          <p data-en>Venerable Sangharatna Manake is the President and spiritual guide of Pannya Metta Sangha. Ordained into the Buddhist monastic tradition, he has dedicated his life to the propagation of the Dhamma and the welfare of all beings — with particular focus on the marginalised and underserved communities of central India.</p>
+          <p data-en>His path has been one of integration — weaving together the contemplative depth of Buddhist practice with active engagement in social welfare, education, and community development. He embodies the Bodhisattva ideal in the truest sense.</p>
+          <p data-ja>サンガラトナ・マナケ師はパンニャ・メッタ・サンガの会長であり精神的ガイドです。仏教の出家伝統に受戒し、ダンマの普及とすべての存在の福祉に生涯を捧げてきました。特に中部インドの疎外されたコミュニティに焦点を当てています。</p>
+        </div>
+      </div>
+      <img src="" alt="Venerable Sangharatna Manake at Dhammasangashti" style="width:100%;height:200px;object-fit:cover;border-radius:12px;margin-top:16px;">
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>🌟 Leadership & Vision</h2>
+      <h2 data-ja>🌟 リーダーシップとビジョン</h2>
+      <p data-en>Under Venerable Sangharatna Manake's leadership, Pannya Metta Sangha has grown from a local organisation into a significant force for Buddhist revival and social transformation in central India. He has overseen the establishment of the Mahasamadhibhumi Maha Stupa, the Balsadan children's home, and numerous social welfare programs.</p>
+      <p data-en>His leadership style is characterised by accessibility, humility, and a boundless generosity of spirit. He maintains close personal connections with the communities the Sangha serves, regularly visiting Balsadan, conducting medical camps, and presiding over Dhammasangashti gatherings.</p>
+      <p data-ja>サンガラトナ・マナケ師のリーダーシップのもと、パンニャ・メッタ・サンガは地域組織から中部インドにおける仏教復興と社会変革の重要な力へと成長しました。マハーサマーディブーミ大仏塔、バルサダンの子どもの家、多数の社会福祉プログラムの設立を監督してきました。</p>
+    </div>
+
+    <div class="info-card ic-purple">
+      <h2 data-en>💛 Social Work & Spiritual Teachings</h2>
+      <h2 data-ja>💛 社会奉仕と精神的教え</h2>
+      <p data-en>Venerable Sangharatna Manake teaches that the Dhamma must be engaged — not merely contemplated. His social teachings emphasise the inseparability of spiritual liberation and social justice, drawing deeply from Dr. Ambedkar's Navayana Buddhism and the Bodhisattva ideal.</p>
+      <p data-en>His dhamma talks, available at Dhammasangashti events and through the annual magazine, address topics ranging from mindfulness and meditation to social equality, education, and community welfare. Thousands have found inspiration and guidance in his words.</p>
+      <p data-ja>サンガラトナ・マナケ師は、ダンマは単に瞑想するだけでなく関与しなければならないと教えます。彼の社会的教えは精神的解脱と社会的正義の不可分性を強調し、アンベードカル博士のナヴァヤーナ仏教と菩薩の理想から深く汲み取っています。</p>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: HORISAWAJI
+══════════════════════════════════════════════ -->
+<div id="page-horisawa" class="subpage">
+  <div class="sp-hero sp-horisawa">
+    <div class="date-badge b-green" data-en>Japan Connection</div>
+    <div class="date-badge b-green" data-ja>日本とのつながり</div>
+    <h1 data-en>Horisawaji</h1>
+    <h1 data-ja>堀沢師</h1>
+    <p class="sp-hero-sub" data-en>A bridge between India and Japan — a devoted Buddhist monk whose collaboration with Pannya Metta Sangha has strengthened the Indo-Japanese Dhamma connection.</p>
+    <p class="sp-hero-sub" data-ja>インドと日本の橋渡し — パンニャ・メッタ・サンガとの協力でインド・日本間のダンマのつながりを強化した献身的な仏教僧。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-green">
+      <h2 data-en>🌸 Biography</h2>
+      <h2 data-ja>🌸 経歴</h2>
+      <div class="leader-grid">
+        <img src="" alt="Horisawaji" class="leader-photo">
+        <div>
+          <p data-en>Horisawaji is a respected Japanese Buddhist monk whose heart has been deeply touched by the Ambedkarite Buddhist movement in India. His journeys to the sacred sites of Indian Buddhism — and particularly to the Mahasamadhibhumi — have forged a deep personal and spiritual connection with Pannya Metta Sangha.</p>
+          <p data-en>With a background in Japanese Zen and Pure Land traditions, Horisawaji brings a complementary perspective to the Navayana Buddhist community in India — enriching the dialogue between these two great streams of Buddhist thought.</p>
+          <p data-ja>堀沢師はインドのアンベードカル派仏教運動に深く心を動かされた尊敬される日本の仏教僧です。インドの仏教聖地、特にマハーサマーディブーミへの旅がパンニャ・メッタ・サンガとの深い個人的・精神的なつながりを築きました。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card ic-green">
+      <h2 data-en>🤝 Contributions & Collaboration with PMS</h2>
+      <h2 data-ja>🤝 PMS との貢献と協力</h2>
+      <p data-en>Horisawaji's collaboration with Pannya Metta Sangha has taken many forms over the years. He has participated in the Dhammasangashti convention, contributed to the Japanese edition of the Mahasamadhibhumi Magazine, and facilitated cultural and spiritual exchanges between the Japanese and Indian Buddhist communities.</p>
+      <p data-en>His support for the Balsadan children's home — helping to raise awareness and funds in Japan — has had a tangible impact on the lives of the children living there. He embodies the principle that the Dhamma knows no borders.</p>
+      <p data-ja>堀沢師とパンニャ・メッタ・サンガの協力は長年にわたり多くの形を取ってきました。ダンマサンガシュティ大会への参加、マハーサマーディブーミ雑誌の日本語版への寄稿、日本とインドの仏教コミュニティ間の文化的・精神的交流の促進などが含まれます。</p>
+      <div class="img-grid-2">
+        <img src="" alt="Horisawaji at Dhammasangashti">
+        <img src="" alt="Indo-Japanese Buddhist exchange">
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ INITIATIVE MODAL ══════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleModalClick(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-subtitle" id="modalSubtitle"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ══════════════ JAVASCRIPT ══════════════ -->
+<script>
+/* Language */
+const isJa = () => document.body.classList.contains('ja');
+function toggleLanguage() {
+  const btn = document.getElementById('langBtn');
+  if (isJa()) { document.body.classList.remove('ja'); btn.textContent = '🌐 日本語'; }
+  else { document.body.classList.add('ja'); btn.textContent = '🌐 English'; }
+}
+
+/* Page routing */
+let currentPage = 'main';
+function showMain() {
+  closeSidePanel();
+  document.getElementById('mainSite').classList.remove('hidden');
+  document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+  currentPage = 'main';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showPage(id) {
+  closeSidePanel();
+  document.getElementById('mainSite').classList.add('hidden');
+  document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+  const t = document.getElementById('page-' + id);
+  if (t) { t.classList.add('active'); currentPage = id; }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* Side panel */
+function openSidePanel() {
+  document.getElementById('sidePanel').classList.add('open');
+  document.getElementById('panelOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidePanel() {
+  document.getElementById('sidePanel').classList.remove('open');
+  document.getElementById('panelOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* Nav to section */
+function navTo(id) {
+  closeSidePanel();
+  if (currentPage !== 'main') {
+    showMain();
+    setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({behavior:'smooth'}); }, 300);
+  } else {
+    const el = document.getElementById(id); if (el) el.scrollIntoView({behavior:'smooth'});
+  }
+}
+
+/* Year tab switcher for Feb7 */
+function switchYear(year) {
+  document.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.year-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + year).classList.add('active');
+  document.getElementById('year-' + year).classList.add('active');
+}
+
+/* Modal data */
+const modalData = {
+  bhoomi: {
+    en: {
+      title: 'Mahasamadhibhumi',
+      subtitle: 'Sacred Memorial Ground · Ruyad (Sindhpuri), Pauni, Bhandara',
+      body: `<div class="modal-hero-img"><img src="" alt="Mahasamadhibhumi Maha Stupa" loading="lazy"></div>
+      <p>Mahasamadhi Bhumi is a prominent Buddhist spiritual and cultural site situated at Ruyad (Sindhpuri) village near Pauni, in Bhandara district of Maharashtra, on the serene banks of the Wainganga River. Established on 8 February 1987 to preserve and promote Buddha Dhamma.</p>
+      <p>Spread across approximately 6.5 acres, the complex is home to the magnificent Maha Samadhi Bhumi Maha Stupa — inaugurated on 8 February 2007, regarded as one of the finest contemporary examples of Buddhist architecture in the region.</p>
+      <h4>A Living Pilgrimage Centre</h4>
+      <p>Thousands of monks, devotees, and visitors from India and abroad visit the site every year, especially during Dhamma Mahotsav and on Poornima and Amavasya days. These gatherings reinforce the site's role as a living centre of Buddhist practice.</p>
+      <h4>Social & Heritage Work</h4>
+      <p>Mahasamadhibhumi organises annual dhamma programs, essay competitions, cultural events, and social welfare activities — serving as both a spiritual sanctuary and a community hub.</p>
+      <div class="modal-img-grid"><img src="" alt="Mahasamadhibhumi stupa"><img src="" alt="Annual program at Mahasamadhibhumi"></div>`
+    },
+    ja: {
+      title: 'マハーサマーディブーミ',
+      subtitle: '神聖な追悼の地・ルヤード（シンドプリ）、パウニ、バンダーラ',
+      body: `<div class="modal-hero-img"><img src="" alt="マハーサマーディブーミ大仏塔" loading="lazy"></div>
+      <p>マハーサマーディ・ブーミはインド・マハーラーシュトラ州バンダーラ地区のパウニ近くにあるルヤード（シンドプリ）村に位置する著名な仏教精神・文化遺跡です。1987年2月8日に設立され、2007年2月8日に大仏塔が開幕しました。</p>
+      <p>約6.5エーカーに広がる複合施設には壮大なマハーサマーディ・ブーミ大仏塔があり、仏陀の生涯の重要な出来事を描写した現代仏教建築の最高例の一つとして評価されています。</p>
+      <div class="modal-img-grid"><img src="" alt="マハーサマーディブーミ仏塔"><img src="" alt="年次プログラム"></div>`
+    }
+  },
+  pradnyagiri: {
+    en: {
+      title: 'Pradnyagiri',
+      subtitle: 'Hill of Wisdom · Dongargarh, Rajnandgaon, Chhattisgarh',
+      body: `<div class="modal-hero-img"><img src="" alt="Pradnyagiri Buddha statue" loading="lazy"></div>
+      <p>On a 30-ft stage on Pradnyagiri mountain (200m above sea level) stands a majestic 30-ft meditating Buddha statue — communicating the message of world peace and brotherhood. The International Buddhist Conference held here on 6 February 2017 drew participants from Japan, Thailand, Sri Lanka, Tibet, Korea, Taiwan, and over 5 lakh attendees from India.</p>
+      <h4>Eye Camp — Community Health Service</h4>
+      <p>In partnership with Dr. Mahatme Eye Hospital, Nagpur, a one-day eye camp at Pahela, Dist. Bhandara examined 200+ villagers. 36 cataract operations were performed. The breakdown: Surgeries: 36 | Spectacles: 48 | Hospital Referrals: 32 | Medicines: 15.</p>
+      <div class="modal-img-grid"><img src="" alt="Pradnyagiri Buddha"><img src="" alt="Eye camp Pradnyagiri"></div>`
+    },
+    ja: {
+      title: 'プラドニャギリ',
+      subtitle: '智慧の丘・ドンガルガル、ラージナンドガオン、チャッティースガル州',
+      body: `<div class="modal-hero-img"><img src="" alt="プラドニャギリ仏陀像" loading="lazy"></div>
+      <p>海抜200メートルのプラドニャギリ山に建立された30フィートの台座の上の30フィート仏陀像は世界平和と友愛を発信しています。2017年2月6日の国際仏教会議には日本、タイ、スリランカ等から参加者が集まり、50万人以上が訪れました。</p>
+      <h4>眼科キャンプ</h4>
+      <p>パーヘラ村での眼科キャンプで200人以上を検診。白内障手術36件、眼鏡処方48件、病院紹介32件、投薬15件の成果を上げました。</p>
+      <div class="modal-img-grid"><img src="" alt="プラドニャギリ仏陀"><img src="" alt="眼科キャンプ"></div>`
+    }
+  },
+  library: {
+    en: {
+      title: 'Pannya Metta Sangha Library',
+      subtitle: 'Buddhist Knowledge Centre · Nagpur',
+      body: `<div class="modal-hero-img"><img src="" alt="PMS Library" loading="lazy"></div>
+      <p>The Pannya Metta Sangha Library is a dedicated repository of Buddhist knowledge — housing thousands of texts on Buddhist philosophy, Pali scriptures, Dr. Ambedkar's writings, social justice literature, and community history.</p>
+      <h4>Collection & Activities</h4>
+      <p>The library holds rare manuscripts, Pali texts, original editions of Dr. Ambedkar's works, Buddhist art books, and a growing digital collection. Regular reading programs, book discussions, and study circles are held for community members of all ages.</p>
+      <h4>Social Impact</h4>
+      <p>By making Buddhist literature freely accessible, the library supports the intellectual development of students, scholars, and practitioners — embodying the Sangha's commitment to Pannya (wisdom) as a living force in the community.</p>
+      <div class="modal-img-grid"><img src="" alt="Library interior"><img src="" alt="Library program"></div>`
+    },
+    ja: {
+      title: 'パンニャ・メッタ・サンガ図書館',
+      subtitle: '仏教知識センター・ナーグプル',
+      body: `<div class="modal-hero-img"><img src="" alt="PMS図書館" loading="lazy"></div>
+      <p>パンニャ・メッタ・サンガ図書館は仏教哲学、パーリ語経典、アンベードカル博士の著作、社会正義文学、コミュニティ史に関する数千冊のテキストを所蔵する仏教知識の専門保管庫です。</p>
+      <h4>コレクションと活動</h4>
+      <p>貴重な写本、パーリ語テキスト、アンベードカル博士の著作の初版、仏教芸術書、成長する電子コレクションを保有。あらゆる年齢のコミュニティメンバーのための定期的な読書プログラム、読書会、学習サークルを開催。</p>
+      <div class="modal-img-grid"><img src="" alt="図書館内部"><img src="" alt="図書館プログラム"></div>`
+    }
+  },
+  balsadan: {
+    en: {
+      title: 'Pannya Metta Balsadan',
+      subtitle: "Children's Home · Sindhpuri, Pauni, Dist. Bhandara",
+      body: `<div class="modal-hero-img"><img src="" alt="Pannya Metta Balsadan" loading="lazy"></div>
+      <p>Pannya Metta Balsadan is dedicated to providing a stable, loving family atmosphere for orphan children. Established in 1995 on 9 acres near Mahasamadhibhumi at Sindhpuri, Pauni, Dist. Bhandara (95 kms from Nagpur).</p>
+      <h4>Our Home</h4>
+      <p>Currently home to 32 children (14 boys, 18 girls), comprising 16 halls. Two Superintendents, teachers, music teacher, cook, and watchman support the community. All children — regardless of caste, creed, or religion — are welcomed.</p>
+      <h4>Education & Development</h4>
+      <p>Children attend reputed schools and colleges. Two dedicated teachers provide 2 hours of personal tuition daily at Balsadan. Activities include dancing, singing, sports, and annual tours (including the memorable 2016 Goa tour covering 4,800 km).</p>
+      <h4>Health Care</h4>
+      <p>Annual health check-up camps screen all children. Regular medical attention, specialist referrals, and ongoing health support are provided. Every year clothes and bedding are donated by Pannya Metta Sangha.</p>
+      <div class="modal-img-grid"><img src="" alt="Children at Balsadan"><img src="" alt="Education program Balsadan"></div>`
+    },
+    ja: {
+      title: 'パンニャ・メッタ・バルサダン',
+      subtitle: '子どもの家・シンドプリ、パウニ、バンダーラ地区',
+      body: `<div class="modal-hero-img"><img src="" alt="パンニャ・メッタ・バルサダン" loading="lazy"></div>
+      <p>1995年2月8日、ナーグプルから95kmのパウニ・シンドプリのマハーサマーディブーミ近くの9エーカーの土地に設立。現在、男子14人・女子18人の計32人が16のホールで生活しています。</p>
+      <h4>教育と発展</h4>
+      <p>子どもたちは優れた学校・大学で学び、毎朝2時間の個人指導を受けます。ダンス、歌、スポーツ、年次旅行（2016年のゴア旅行4,800kmを含む）に参加。</p>
+      <h4>健康管理</h4>
+      <p>年次健康診断キャンプで全員を検診。毎年衣類と寝具がパンニャ・メッタ・サンガより寄贈されています。</p>
+      <div class="modal-img-grid"><img src="" alt="バルサダンの子どもたち"><img src="" alt="バルサダン教育プログラム"></div>`
+    }
+  }
+};
+
+function openModal(key) {
+  const lang = isJa() ? 'ja' : 'en';
+  const d = modalData[key][lang];
+  document.getElementById('modalTitle').textContent = d.title;
+  document.getElementById('modalSubtitle').textContent = d.subtitle;
+  document.getElementById('modalBody').innerHTML = d.body;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleModalClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+/* Keyboard */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeSidePanel(); }
+});
+</script>
+</body>
+</html>
